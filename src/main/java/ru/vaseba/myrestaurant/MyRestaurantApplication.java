@@ -7,8 +7,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import ru.vaseba.myrestaurant.model.Role;
 import ru.vaseba.myrestaurant.model.User;
+import ru.vaseba.myrestaurant.model.Voice;
 import ru.vaseba.myrestaurant.repository.UserRepository;
+import ru.vaseba.myrestaurant.repository.VoiceRepository;
 
+import java.time.LocalDate;
 import java.util.Set;
 
 @SpringBootApplication
@@ -22,8 +25,10 @@ public class MyRestaurantApplication implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
-        userRepository.save(new User("user@gmail.com", "User_First", "User_Last", "password", Set.of(Role.ROLE_USER)));
-        userRepository.save(new User("admin@javaops.ru", "Admin_First", "Admin_Last", "admin", Set.of(Role.ROLE_USER, Role.ROLE_ADMIN)));
+        User testUser1 = new User("user@gmail.com", "password", Set.of(Role.ROLE_USER));
+        User testUser2 = new User("admin@javaops.ru", "admin", Set.of(Role.ROLE_USER, Role.ROLE_ADMIN));
+        userRepository.save(testUser1);
+        userRepository.save(testUser2);
         System.out.println(userRepository.findAll());
     }
 }

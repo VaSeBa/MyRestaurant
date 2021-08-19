@@ -1,10 +1,13 @@
 package ru.vaseba.myrestaurant.model;
 
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.util.Set;
@@ -18,27 +21,23 @@ import java.util.Set;
 @ToString(callSuper = true, exclude = {"password"})
 public class User extends AbstractPersistable<Integer> {
 
-    @Column(name = "email", nullable = false, unique = true)
+    @Column(name = "email", nullable = false)
     @Email
-    @NotEmpty
-    @Size(max = 128)
+    @NotBlank
+    @Size(max = 100)
     private String email;
 
-    @Column(name = "first_name")
-    @Size(max = 128)
-    private String firstName;
-
-    @Column(name = "last_name")
-    @Size(max = 128)
-    private String lastName;
-
-    @Column(name = "password")
-    @Size(max = 256)
+    @NotBlank
+    @Column(name = "password", nullable = false)
+    @Size(min = 5, max = 100)
     private String password;
 
     @Enumerated(EnumType.STRING)
-    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "role"}, name = "user_roles_unique")})
+    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),
+            uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "role"}, name = "user_roles_idx")})
     @Column(name = "role")
     @ElementCollection(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id") //https://stackoverflow.com/a/62848296/548473
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Role> roles;
 }
