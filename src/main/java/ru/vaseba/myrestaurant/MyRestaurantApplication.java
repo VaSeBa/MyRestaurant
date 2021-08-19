@@ -8,6 +8,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import ru.vaseba.myrestaurant.model.Role;
 import ru.vaseba.myrestaurant.model.User;
 import ru.vaseba.myrestaurant.model.Voice;
+import ru.vaseba.myrestaurant.repository.DishRepository;
+import ru.vaseba.myrestaurant.repository.RestaurantRepository;
 import ru.vaseba.myrestaurant.repository.UserRepository;
 import ru.vaseba.myrestaurant.repository.VoiceRepository;
 
@@ -18,6 +20,9 @@ import java.util.Set;
 @AllArgsConstructor
 public class MyRestaurantApplication implements ApplicationRunner {
     private final UserRepository userRepository;
+    private final RestaurantRepository restaurantRepository;
+    private final DishRepository dishRepository;
+    private final VoiceRepository voiceRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(MyRestaurantApplication.class, args);
@@ -27,5 +32,9 @@ public class MyRestaurantApplication implements ApplicationRunner {
     public void run(ApplicationArguments args) {
 //        System.out.println(userRepository.findAll());
         System.out.println(userRepository.findByEmailIgnoreCase("user1@yandex.ru"));
+        System.out.println(userRepository.findByNameContainingIgnoreCase("User_Name"));
+        System.out.println(restaurantRepository.findAll());
+        System.out.println(dishRepository.findAll());
+        System.out.println(voiceRepository.findAll());
     }
 }

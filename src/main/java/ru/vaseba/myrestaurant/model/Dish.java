@@ -4,6 +4,7 @@ import lombok.*;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 
 @Entity
@@ -14,6 +15,10 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @ToString(callSuper = true)
 public class Dish extends BaseEntity {
+
+    @Column(name = "name")
+    @Size(max = 128)
+    private String name;
 
     // https://stackoverflow.com/questions/8148684/what-data-type-to-use-for-money-in-java/43051227#43051227
     @Column(name = "price", nullable = false)

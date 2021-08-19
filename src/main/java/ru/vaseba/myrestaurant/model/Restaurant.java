@@ -4,10 +4,8 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
@@ -19,12 +17,16 @@ import java.util.List;
 @ToString(callSuper = true)
 public class Restaurant extends BaseEntity {
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
-    @JsonManagedReference(value = "restaurant-menu")
-    private List<Dish> menu;
+    @Column(name = "name")
+    @Size(max = 128)
+    private String name;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
-    @JsonManagedReference(value = "restaurant-voices")
-    private List<Voice> voices;
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
+//    @JsonManagedReference(value = "restaurant-menu")
+//    private List<Dish> menu;
+//
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
+//    @JsonManagedReference(value = "restaurant-voices")
+//    private List<Voice> voices;
 
 }
