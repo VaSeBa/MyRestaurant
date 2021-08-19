@@ -25,10 +25,7 @@ public class MyRestaurantApplication implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
-        User testUser1 = new User("user@gmail.com", "password", Set.of(Role.ROLE_USER));
-        User testUser2 = new User("admin@javaops.ru", "admin", Set.of(Role.ROLE_USER, Role.ROLE_ADMIN));
-        userRepository.save(testUser1);
-        userRepository.save(testUser2);
-        System.out.println(userRepository.findAll());
+//        System.out.println(userRepository.findAll());
+        System.out.println(userRepository.findByEmailIgnoreCase("user1@yandex.ru"));
     }
 }

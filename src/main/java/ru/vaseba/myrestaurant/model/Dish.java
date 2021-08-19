@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @ToString(callSuper = true)
-public class Dish extends AbstractPersistable<Integer> {
+public class Dish extends BaseEntity {
 
     // https://stackoverflow.com/questions/8148684/what-data-type-to-use-for-money-in-java/43051227#43051227
     @Column(name = "price", nullable = false)

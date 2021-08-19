@@ -19,7 +19,11 @@ import java.util.Set;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @ToString(callSuper = true, exclude = {"password"})
-public class User extends AbstractPersistable<Integer> {
+public class User extends BaseEntity {
+
+    @Column(name = "name")
+    @Size(max = 128)
+    private String name;
 
     @Column(name = "email", nullable = false)
     @Email

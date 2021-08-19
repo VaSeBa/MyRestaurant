@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @ToString(callSuper = true)
-public class Voice extends AbstractPersistable<Integer> {
+public class Voice extends BaseEntity {
 
     @NotNull
     @Column(name = "time_of_voicing", nullable = false)
