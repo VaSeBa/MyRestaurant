@@ -1,5 +1,7 @@
 package ru.vaseba.myrestaurant.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.rest.core.annotation.RestResource;
@@ -17,5 +19,5 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     Optional<User> findByEmailIgnoreCase(String email);
 
     @RestResource(rel = "by-name", path = "by-name")
-    List<User> findByNameContainingIgnoreCase(String name);
+    Page<User> findByNameContainingIgnoreCase(String lastName, Pageable page);
 }

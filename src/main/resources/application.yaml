@@ -28,6 +28,7 @@ spring:
   data.rest:
     #  https://docs.spring.io/spring-data/rest/docs/current/reference/html/#getting-started.basic-settings
     basePath: /api
+    defaultPageSize: 20
     returnBodyOnCreate: true
     #    GET http://localhost:8080/api
     #    GET http://localhost:8080/api/users
@@ -56,3 +57,12 @@ logging:
       root: WARN
       ru.javaops.bootjava: DEBUG
 #      org.springframework.security.web.FilterChainProxy: DEBUG
+
+server.servlet:
+  encoding:
+    charset: UTF-8 # Charset of HTTP requests and responses. Added to the "Content-Type" header if not set explicitly
+    enabled: true # Enable http encoding support
+    force: true
+
+
+#  curl -s http://localhost:8080/api/account --user user@gmail.com:password
