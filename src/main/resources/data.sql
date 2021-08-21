@@ -28,7 +28,7 @@ INSERT INTO voice (user_id, restaurants_id, time_of_voicing) VALUES
 (2, 2, '2021-08-19');
 
 INSERT INTO user_roles (role, user_id)
-VALUES ('ROLE_USER', 1),
-       ('ROLE_ADMIN', 2),
-       ('ROLE_USER', 2);
+VALUES ('USER', 1),
+       ('ADMIN', 2),
+       ('USER', 2);
 

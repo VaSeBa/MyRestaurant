@@ -30,11 +30,10 @@ public class MyRestaurantApplication implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
-//        System.out.println(userRepository.findAll());
-        System.out.println(userRepository.findByEmailIgnoreCase("user1@yandex.ru"));
-        System.out.println(userRepository.findByNameContainingIgnoreCase("User_Name"));
-        System.out.println(restaurantRepository.findAll());
-        System.out.println(dishRepository.findAll());
-        System.out.println(voiceRepository.findAll());
+//        System.out.println(userRepository.findByEmailIgnoreCase("user1@yandex.ru"));
+//        System.out.println(userRepository.findByNameContainingIgnoreCase("User_Name"));
+//        System.out.println(restaurantRepository.findAll());
+//        System.out.println(dishRepository.findAll());
+//        System.out.println(voiceRepository.findAll());
     }
 }
