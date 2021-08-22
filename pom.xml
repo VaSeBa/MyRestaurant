@@ -12,12 +12,13 @@
 
     <groupId>ru.vaseba</groupId>
     <artifactId>MyRestaurant</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0</version>
     <name>MyRestaurant</name>
     <description>MyRestaurant</description>
 
     <properties>
         <java.version>16</java.version>
+        <springdoc.version>1.5.6</springdoc.version>
     </properties>
 
     <dependencies>
@@ -40,6 +41,23 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+        <!--Swagger-->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>${springdoc.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-data-rest</artifactId>
+            <version>${springdoc.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-security</artifactId>
+            <version>${springdoc.version}</version>
         </dependency>
 
         <dependency>
