@@ -15,6 +15,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.EnumSet;
 import java.util.Set;
 
 @Entity
@@ -36,8 +38,7 @@ public class User extends BaseEntity implements Serializable {
     @Size(max = 100)
     private String email;
 
-    @NotBlank
-    @Column(name = "password", nullable = false)
+    @Column(name = "password")
     @Size(min = 5, max = 100)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @JsonDeserialize(using = JsonDeserializers.PasswordDeserializer.class)
@@ -54,5 +55,10 @@ public class User extends BaseEntity implements Serializable {
 
     public void setEmail(String email) {
         this.email = StringUtils.hasText(email) ? email.toLowerCase() : null;
+    }
+
+    public User(Integer id, String name, String email, String password, Collection<Role> roles) {
+        this(name, email, password, EnumSet.copyOf(roles));
+        this.id = id;
     }
 }

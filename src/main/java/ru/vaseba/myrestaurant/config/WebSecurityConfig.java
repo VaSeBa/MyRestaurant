@@ -1,5 +1,6 @@
 package ru.vaseba.myrestaurant.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,9 @@ import ru.vaseba.myrestaurant.AuthUser;
 import ru.vaseba.myrestaurant.model.Role;
 import ru.vaseba.myrestaurant.model.User;
 import ru.vaseba.myrestaurant.repository.UserRepository;
+import ru.vaseba.myrestaurant.util.JsonUtil;
 
+import javax.annotation.PostConstruct;
 import java.util.Optional;
 
 @Configuration
@@ -29,6 +32,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public static final PasswordEncoder PASSWORD_ENCODER =
             PasswordEncoderFactories.createDelegatingPasswordEncoder();
     private final UserRepository userRepository;
+    private final ObjectMapper objectMapper;
+
+    @PostConstruct
+    void setMapper() {
+        JsonUtil.setObjectMapper(objectMapper);
+    }
 
     @Bean
     public UserDetailsService userDetailsService() {

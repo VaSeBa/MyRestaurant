@@ -23,8 +23,6 @@ import ru.vaseba.myrestaurant.util.ValidationUtil;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.EnumSet;
-
-
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 /**
