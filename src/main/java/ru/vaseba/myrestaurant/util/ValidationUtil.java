@@ -1,8 +1,10 @@
 package ru.vaseba.myrestaurant.util;
 
+import lombok.experimental.UtilityClass;
 import ru.vaseba.myrestaurant.error.IllegalRequestDataException;
 import ru.vaseba.myrestaurant.model.BaseEntity;
 
+@UtilityClass
 public class ValidationUtil {
 
     public static void checkNew(BaseEntity entity) {
