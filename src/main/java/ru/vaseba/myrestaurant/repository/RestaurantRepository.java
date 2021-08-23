@@ -8,6 +8,6 @@ import ru.vaseba.myrestaurant.model.User;
 
 @Transactional(readOnly = true)
 @Tag(name = "Restaurant Controller")
-public interface RestaurantRepository extends JpaRepository<Restaurant, Integer> {
+public interface RestaurantRepository extends BaseRepository<Restaurant> {
 
 }

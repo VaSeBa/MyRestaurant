@@ -1,8 +1,6 @@
 package ru.vaseba.myrestaurant.model;
 
 import lombok.*;
-import org.springframework.data.jpa.domain.AbstractPersistable;
-
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
@@ -14,11 +12,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @ToString(callSuper = true)
-public class Dish extends BaseEntity {
-
-    @Column(name = "name")
-    @Size(max = 128)
-    private String name;
+public class Dish extends NamedEntity {
 
     // https://stackoverflow.com/questions/8148684/what-data-type-to-use-for-money-in-java/43051227#43051227
     @Column(name = "price", nullable = false)

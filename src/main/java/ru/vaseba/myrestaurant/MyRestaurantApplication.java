@@ -19,9 +19,7 @@ import java.util.Set;
 @SpringBootApplication
 public class MyRestaurantApplication {
 
-
     public static void main(String[] args) {
         SpringApplication.run(MyRestaurantApplication.class, args);
     }
-
 }

@@ -30,7 +30,7 @@ public class UserTestUtil {
     }
 
     public static void assertEquals(User actual, User expected) {
-        assertThat(actual).usingRecursiveComparison().ignoringFields("password").isEqualTo(expected);
+        assertThat(actual).usingRecursiveComparison().ignoringFields("id", "password").isEqualTo(expected);
     }
 
     // No id in HATEOAS answer

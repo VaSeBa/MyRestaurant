@@ -8,5 +8,5 @@ import ru.vaseba.myrestaurant.model.Voice;
 
 @Transactional(readOnly = true)
 @Tag(name = "Voice Controller")
-public interface VoiceRepository extends JpaRepository<Voice, Integer> {
+public interface VoiceRepository extends BaseRepository<Voice> {
 }

@@ -26,11 +26,7 @@ import java.util.Set;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @ToString(callSuper = true, exclude = {"password"})
-public class User extends BaseEntity implements Serializable {
-
-    @Column(name = "name")
-    @Size(max = 128)
-    private String name;
+public class User extends NamedEntity implements Serializable {
 
     @Column(name = "email", nullable = false)
     @Email
@@ -58,7 +54,8 @@ public class User extends BaseEntity implements Serializable {
     }
 
     public User(Integer id, String name, String email, String password, Collection<Role> roles) {
-        this(name, email, password, EnumSet.copyOf(roles));
+        this(email, password, EnumSet.copyOf(roles));
         this.id = id;
+        this.name = name;
     }
 }
