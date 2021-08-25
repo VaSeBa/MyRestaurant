@@ -67,3 +67,4 @@ server.servlet:
 
 
 #  curl -s http://localhost:8080/api/account --user user@gmail.com:password
+#  curl -s http://localhost:8080/api/restaurants --user admin@javaops.ru:admin

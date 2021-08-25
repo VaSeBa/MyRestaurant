@@ -16,7 +16,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ru.vaseba.myrestaurant.UserTestUtil.*;
 import static ru.vaseba.myrestaurant.util.JsonUtil.writeValue;
-import static ru.vaseba.myrestaurant.web.UserController.URL;
+import static ru.vaseba.myrestaurant.web.AccountController.URL;
 
 class UserRestControllerTest extends AbstractControllerTest {
 

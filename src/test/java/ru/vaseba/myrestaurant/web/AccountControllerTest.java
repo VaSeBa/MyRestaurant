@@ -17,7 +17,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static ru.vaseba.myrestaurant.UserTestUtil.*;
 import static ru.vaseba.myrestaurant.util.JsonUtil.writeValue;
 
-class UserControllerTest extends AbstractControllerTest {
+class AccountControllerTest extends AbstractControllerTest {
     static final String URL = "/api/users/";
 
     @Autowired

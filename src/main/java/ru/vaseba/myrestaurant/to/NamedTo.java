@@ -21,4 +21,6 @@ public class NamedTo extends BaseTo {
         this.name = name;
     }
 
+    public NamedTo() {
+    }
 }
