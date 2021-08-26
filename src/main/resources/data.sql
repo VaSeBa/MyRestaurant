@@ -1,5 +1,6 @@
 INSERT INTO users (name, email, password)
-VALUES ('User_Name', 'user@gmail.com', '{noop}password'),
+VALUES ('User_Name', 'first_user@gmail.com', '{noop}password1'),
+       ('User_Name', 'second_user@gmail.com', '{noop}password2'),
        ('Admin_Name', 'admin@javaops.ru', '{noop}admin');
 
 INSERT INTO restaurant (id, name) VALUES
@@ -19,15 +20,12 @@ INSERT INTO dish (name, price, restaurants_id) VALUES
 ('Суши', 150, 2);
 
 INSERT INTO voice (user_id, restaurants_id, time_of_voicing) VALUES
-(1, 1, '2021-08-19'),
-(2, 1, '2021-08-19'),
-(1, 1, '2021-08-19'),
-(2, 1, '2021-08-19'),
-(1, 2, '2021-08-19'),
+(1, 1, today),
 (2, 2, '2021-08-19');
 
 INSERT INTO user_roles (role, user_id)
 VALUES ('USER', 1),
-       ('ADMIN', 2),
-       ('USER', 2);
+       ('USER', 2),
+       ('ADMIN', 3),
+       ('USER', 3);
 

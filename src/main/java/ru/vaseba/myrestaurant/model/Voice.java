@@ -8,7 +8,9 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "voice")
+@Table(name = "voice", uniqueConstraints =
+        {@UniqueConstraint(columnNames =
+                {"user_id", "time_of_voicing"}, name = "voice_idx")})
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -27,6 +29,5 @@ public class Voice extends BaseEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "restaurants_id", nullable = false)
     private Restaurant restaurant;
-
 
 }

@@ -59,11 +59,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/api/account/register").anonymous()
+                .antMatchers("/api/account/register").permitAll()
                 .antMatchers("/api/account").hasRole(Role.USER.name())
+                .antMatchers("/api/admin/users").hasRole(Role.ADMIN.name())
                 .antMatchers("/api/**").hasRole(Role.ADMIN.name())
-                .antMatchers("/api/restaurants/**").anonymous()
-                .antMatchers("/api/dish/**").hasRole(Role.ADMIN.name())
+                .antMatchers("/api/voice/**").permitAll()
+                .antMatchers("/api/restaurants/**").permitAll()
+                .antMatchers("/api/dish/**").permitAll()
                 .and().httpBasic()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().csrf().disable();
