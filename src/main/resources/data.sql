@@ -2,9 +2,9 @@ INSERT INTO users (name, email, password)
 VALUES ('User_Name', 'user@gmail.com', '{noop}password'),
        ('Admin_Name', 'admin@javaops.ru', '{noop}admin');
 
-INSERT INTO restaurant (name) VALUES
-('Москва'),
-('Кухни мира');
+INSERT INTO restaurant (id, name) VALUES
+(1, 'Москва'),
+(2, 'Кухни мира');
 
 INSERT INTO dish (name, price, restaurants_id) VALUES
 ('Щи', 100, 1),

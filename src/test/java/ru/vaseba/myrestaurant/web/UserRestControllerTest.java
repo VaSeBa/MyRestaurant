@@ -3,7 +3,7 @@ package ru.vaseba.myrestaurant.web;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.MediaTypes;
+
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -29,7 +29,7 @@ class UserRestControllerTest extends AbstractControllerTest {
         perform(MockMvcRequestBuilders.get(URL))
                 .andExpect(status().isOk())
                 .andDo(print())
-                .andExpect(content().contentTypeCompatibleWith(MediaTypes.HAL_JSON_VALUE))
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonMatcher(user, UserTestUtil::assertEquals));
     }
 
