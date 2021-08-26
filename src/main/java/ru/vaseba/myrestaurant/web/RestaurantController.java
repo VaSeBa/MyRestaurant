@@ -31,14 +31,14 @@ public class RestaurantController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Restaurant> getAll() {
         List<Restaurant> restaurants = restaurantRepository.findAll();
-        log.info("get all users: {}", restaurants);
+        log.info("get all restaurants: {}", restaurants);
         return restaurants;
     }
 
     @GetMapping(value = "/{id}")
     public Optional<Restaurant> getById(@PathVariable int id) {
         Optional<Restaurant> restaurant = restaurantRepository.findById(id);
-        log.info("get user by id: {}, user: {}", id, restaurant);
+        log.info("get restaurant by id: {}, restaurant: {}", id, restaurant);
         return restaurant;
     }
 
