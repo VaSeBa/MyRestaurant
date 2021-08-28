@@ -36,22 +36,6 @@ spring:
     #    GET http://localhost:8080/api/users/1
     #    GET http://localhost:8080/api/users/search
     #    GET http://localhost:8080/api/users/search/by-email?email=User@gmail.com
-    #    GET http://localhost:8080/api/users/search/by-lastname?lastName=Admin
-    #    GET http://localhost:8080/api/users/search/by-lastname?lastName=last
-
-    # Jackson Serialization Issue Resolver
-    #  jackson:
-    #    visibility.field: any
-    #    visibility.getter: none
-    #    visibility.setter: none
-    #    visibility.is-getter: none
-
-    #  https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-application-properties.html#security-properties
-#  security:
-#    user:
-#      name: user
-#      password: password
-#      roles: USER
 
 logging:
     level:
@@ -65,7 +49,3 @@ server.servlet:
     enabled: true # Enable http encoding support
     force: true
 
-
-#  curl -s http://localhost:8080/api/account --user user@gmail.com:password
-#  curl -s http://localhost:8080/api/restaurants --user admin@javaops.ru:admin
-#  curl -s http://localhost:8080/api/restaurants/1 --user admin@javaops.ru:admin
