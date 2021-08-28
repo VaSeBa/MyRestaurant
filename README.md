@@ -26,3 +26,36 @@ Each restaurant provides a new menu each day.
 - Spring Data JPA
 - Spring Security
 
+# You can download this application
+
+git clone https://github.com/VaSeBa/MyRestaurant.git
+then start
+mvn spring-boot:run (in bash)
+
+
+# Swagger (REST API documentation)
+
+http://localhost:8080/swagger-ui.html
+http://localhost:8080/v3/api-docs
+
+# Curl 
+
+get all user (for admin)
+curl -s http://localhost:8080/api/admin/users --user admin@javaops.ru:admin
+get user for id (for admin)
+curl -s http://localhost:8080/api/admin/users/(select id of user) --user admin@javaops.ru:admin
+get all restaurant (for admin)
+curl -s http://localhost:8080/api/admin/restaurant --user admin@javaops.ru:admin
+get restaurant for id (for admin)
+curl -s http://localhost:8080/api/admin/restaurant/(select id of user) --user admin@javaops.ru:admin
+get all dish (for admin)
+curl -s http://localhost:8080/api/admin/dish --user admin@javaops.ru:admin
+get dish for id (for admin)
+curl -s http://localhost:8080/api/admin/dish/(select id of user) --user admin@javaops.ru:admin
+get all voice (for admin)
+curl -s http://localhost:8080/api/admin/voice --user admin@javaops.ru:admin
+
+get user account 
+curl -s http://localhost:8080/api/account --user first_user@gmail.com:password1
+
+
