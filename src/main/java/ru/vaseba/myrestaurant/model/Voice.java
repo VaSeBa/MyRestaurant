@@ -1,20 +1,18 @@
 package ru.vaseba.myrestaurant.model;
 
 import lombok.*;
-import org.springframework.data.jpa.domain.AbstractPersistable;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.time.LocalTime;
 
 @Entity
+@Builder
 @Table(name = "voice", uniqueConstraints =
         {@UniqueConstraint(columnNames =
                 {"user_id", "time_of_voicing"}, name = "voice_idx")})
 @Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 @AllArgsConstructor
 @ToString(callSuper = true)
 public class Voice extends BaseEntity {
@@ -31,4 +29,10 @@ public class Voice extends BaseEntity {
     @JoinColumn(name = "restaurants_id", nullable = false)
     private Restaurant restaurant;
 
+    public static Voice makeDefault(LocalDate timeOfVoicing, Restaurant restaurant) {
+        return builder()
+                .timeOfVoicing(timeOfVoicing)
+                .restaurant(restaurant)
+                .build();
+    }
 }

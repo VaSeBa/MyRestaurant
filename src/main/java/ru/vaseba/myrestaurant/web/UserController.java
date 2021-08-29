@@ -50,7 +50,6 @@ public class UserController {
     public ResponseEntity<User> createWithLocation(@RequestBody User user) {
         User created = userRepository.save(user);
         log.info("create user: {}", user);
-        ValidationUtil.checkNew(user);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(URL + "/{id}")
                 .buildAndExpand(created.getId()).toUri();

@@ -6,12 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import ru.vaseba.myrestaurant.AuthUser;
 import ru.vaseba.myrestaurant.model.Dish;
-import ru.vaseba.myrestaurant.model.User;
 import ru.vaseba.myrestaurant.repository.DishRepository;
 import ru.vaseba.myrestaurant.util.ValidationUtil;
 
@@ -52,7 +49,6 @@ public class DishController {
     public ResponseEntity<Dish> createWithLocation(@RequestBody Dish dish) {
         Dish created = dishRepository.save(dish);
         log.info("create user: {}", dish);
-        ValidationUtil.checkNew(dish);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(URL + "/{id}")
                 .buildAndExpand(created.getId()).toUri();

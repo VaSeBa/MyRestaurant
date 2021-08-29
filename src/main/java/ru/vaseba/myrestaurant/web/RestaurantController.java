@@ -10,14 +10,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.vaseba.myrestaurant.model.Restaurant;
+import ru.vaseba.myrestaurant.model.Role;
+import ru.vaseba.myrestaurant.model.User;
 import ru.vaseba.myrestaurant.repository.RestaurantRepository;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.util.EnumSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @RestController
 @RequestMapping(value = RestaurantController.URL, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -47,8 +47,10 @@ public class RestaurantController {
         return restaurant;
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Restaurant> createWithLocation(@RequestBody Restaurant restaurant) {
+    @PostMapping(value = "create", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(value = HttpStatus.CREATED)
+    public ResponseEntity<Restaurant> create(@RequestBody Restaurant restaurant, @Valid @RequestBody User user) {
+
         Restaurant created = restaurantRepository.save(restaurant);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(URL + "/{id}")
