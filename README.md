@@ -45,17 +45,19 @@ curl -s http://localhost:8080/api/admin/users --user admin@javaops.ru:admin
 get user for id (for admin)
 curl -s http://localhost:8080/api/admin/users/(select id of user) --user admin@javaops.ru:admin
 get all restaurant (for admin)
-curl -s http://localhost:8080/api/admin/restaurant --user admin@javaops.ru:admin
+curl -s http://localhost:8080/api/restaurants --user admin@javaops.ru:admin
 get restaurant for id (for admin)
-curl -s http://localhost:8080/api/admin/restaurant/(select id of user) --user admin@javaops.ru:admin
+curl -s http://localhost:8080/api/restaurants/(select id of user) --user admin@javaops.ru:admin
 get all dish (for admin)
-curl -s http://localhost:8080/api/admin/dish --user admin@javaops.ru:admin
+curl -s http://localhost:8080/api/dishes --user admin@javaops.ru:admin
 get dish for id (for admin)
-curl -s http://localhost:8080/api/admin/dish/(select id of user) --user admin@javaops.ru:admin
+curl -s http://localhost:8080/api/dishes (select id of user) --user admin@javaops.ru:admin
 get all voice (for admin)
-curl -s http://localhost:8080/api/admin/voice --user admin@javaops.ru:admin
+curl -s http://localhost:8080/api/voice --user admin@javaops.ru:admin
 
 get user account 
 curl -s http://localhost:8080/api/account --user first_user@gmail.com:password1
+
+
 
 
