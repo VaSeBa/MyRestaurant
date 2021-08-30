@@ -11,7 +11,6 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
 public class Restaurant extends NamedEntity {
 
     @JsonManagedReference(value = "restaurant")
@@ -21,6 +20,11 @@ public class Restaurant extends NamedEntity {
 //    @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
 //    @JsonManagedReference(value = "restaurant-voices")
 //    private List<Voice> voices;
+
+    public Restaurant(Integer id, String name, List<Dish> menu) {
+        super(id, name);
+        this.menu = menu;
+    }
 
     @Override
     public String toString() {

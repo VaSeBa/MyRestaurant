@@ -11,7 +11,6 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
 public class Dish extends NamedEntity {
 
     // https://stackoverflow.com/questions/8148684/what-data-type-to-use-for-money-in-java/43051227#43051227
@@ -22,6 +21,12 @@ public class Dish extends NamedEntity {
     @JoinColumn(name = "restaurants_id", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
     private Restaurant restaurant;
+
+    public Dish(Integer id, String name, BigDecimal price, Restaurant restaurant) {
+        super(id, name);
+        this.price = price;
+        this.restaurant = restaurant;
+    }
 
     @Override
     public String toString() {

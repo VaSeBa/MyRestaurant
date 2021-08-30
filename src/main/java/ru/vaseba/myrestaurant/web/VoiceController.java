@@ -21,6 +21,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
+import static ru.vaseba.myrestaurant.util.ValidationUtil.checkNew;
+
 
 @RestController
 @RequestMapping(value = VoiceController.URL, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -50,12 +52,11 @@ public class VoiceController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Voice> create(Voice voice, int userId){
-        URI getUriNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path(URL + "{id}")
-                .buildAndExpand(userId)
-                .toUri();
-        return ResponseEntity.created(getUriNewResource)
-                .body(new Voice());
+    public ResponseEntity<Voice> create(Voice voice){
+        Voice created = voiceRepository.save(voice);
+        URI uri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path(URL + "/{id}")
+                .buildAndExpand(created.getId()).toUri();
+        return ResponseEntity.created(uri).body(created);
     }
 }

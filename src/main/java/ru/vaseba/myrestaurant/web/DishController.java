@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.vaseba.myrestaurant.model.Dish;
+import ru.vaseba.myrestaurant.model.Restaurant;
 import ru.vaseba.myrestaurant.repository.DishRepository;
 import ru.vaseba.myrestaurant.util.ValidationUtil;
 
@@ -16,12 +17,15 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
+import static ru.vaseba.myrestaurant.util.ValidationUtil.checkNew;
+import static ru.vaseba.myrestaurant.util.ValidationUtil.checkNotFoundWithId;
+
 @RestController
 @RequestMapping(value = DishController.URL, produces = MediaType.APPLICATION_JSON_VALUE)
 @Slf4j
 @Tag(name = "Dish Controller")
 public class DishController {
-    static final String URL = "/api/dish";
+    static final String URL = "/api/dishes";
 
     private final DishRepository dishRepository;
 
@@ -45,28 +49,17 @@ public class DishController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(value = HttpStatus.CREATED)
-    public ResponseEntity<Dish> createWithLocation(@RequestBody Dish dish) {
+    public ResponseEntity<Dish> create(@RequestBody Dish dish) {
+        checkNew(dish);
         Dish created = dishRepository.save(dish);
-        log.info("create user: {}", dish);
-        URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
+        URI uri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(URL + "/{id}")
                 .buildAndExpand(created.getId()).toUri();
-        return ResponseEntity.created(uriOfNewResource).body(created);
-    }
-
-    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Dish update(@RequestBody Dish dish, @PathVariable int id) {
-        log.info("update dish: {} id: {}, ", dish, id);
-        ValidationUtil.assureIdConsistent(dish, id);
-
-        return dishRepository.save(dish);
+        return ResponseEntity.created(uri).body(created);
     }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id) {
-        log.info("delete dish id: {}", id);
-        dishRepository.deleteById(id);
+        checkNotFoundWithId(id != 0, id);
     }
 }
