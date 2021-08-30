@@ -1,19 +1,12 @@
 package ru.vaseba.myrestaurant.util;
 
 import lombok.experimental.UtilityClass;
-import ru.vaseba.myrestaurant.HasId;
 import ru.vaseba.myrestaurant.error.IllegalRequestDataException;
 import ru.vaseba.myrestaurant.error.NotFoundException;
 import ru.vaseba.myrestaurant.model.BaseEntity;
 
 @UtilityClass
 public class ValidationUtil {
-
-    public static void checkNew(HasId bean) {
-        if (!bean.isNew()) {
-            throw new IllegalRequestDataException(bean + " must be new (id=null)");
-        }
-    }
 
     //  Conservative when you reply, but accept liberally (http://stackoverflow.com/a/32728226/548473)
     public static void assureIdConsistent(BaseEntity entity, int id) {
@@ -32,5 +25,16 @@ public class ValidationUtil {
         if (!found) {
             throw new NotFoundException("Not found entity with " + msg);
         }
+    }
+
+    public static void checkNew(BaseEntity entity) {
+        if (!entity.isNew()) {
+            throw new IllegalArgumentException(entity + " must be new (id=null)");
+        }
+    }
+
+    public static <T> T checkNotFoundWithId(T object, int id) {
+        checkNotFoundWithId(object != null, id);
+        return object;
     }
 }

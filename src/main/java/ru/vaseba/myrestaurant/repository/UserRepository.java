@@ -19,7 +19,7 @@ import java.util.Optional;
 
 @Transactional(readOnly = true)
 @Tag(name = "User Controller")
-public interface UserRepository extends BaseRepository<User> {
+public interface UserRepository extends JpaRepository<User, Integer> {
 
     @RestResource(rel = "by-email", path = "by-email")
     @Query("SELECT u FROM User u WHERE u.email = LOWER(:email)")

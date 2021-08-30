@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.vaseba.myrestaurant.error.NotFoundException;
 import ru.vaseba.myrestaurant.model.Restaurant;
 import ru.vaseba.myrestaurant.model.User;
@@ -13,7 +14,9 @@ import ru.vaseba.myrestaurant.model.Voice;
 import ru.vaseba.myrestaurant.repository.RestaurantRepository;
 import ru.vaseba.myrestaurant.repository.UserRepository;
 import ru.vaseba.myrestaurant.repository.VoiceRepository;
+import ru.vaseba.myrestaurant.util.SecurityUtil;
 
+import java.net.URI;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -46,5 +49,13 @@ public class VoiceController {
         voiceRepository.getByUserIdAndRestaurantIdAndTimeOfVoicing(userId, restaurantId, LocalDate.now());
     }
 
-
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Voice> create(Voice voice, int userId){
+        URI getUriNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path(URL + "{id}")
+                .buildAndExpand(userId)
+                .toUri();
+        return ResponseEntity.created(getUriNewResource)
+                .body(new Voice());
+    }
 }

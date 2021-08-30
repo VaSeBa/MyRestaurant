@@ -45,33 +45,11 @@ public class UserController {
         return user;
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(value = HttpStatus.CREATED)
-    public ResponseEntity<User> createWithLocation(@RequestBody User user) {
-        User created = userRepository.save(user);
-        log.info("create user: {}", user);
-        URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path(URL + "/{id}")
-                .buildAndExpand(created.getId()).toUri();
-        return ResponseEntity.created(uriOfNewResource).body(created);
-    }
-
     @GetMapping("/by")
     public Optional<User> getByEmail(@RequestParam String email) {
         Optional<User> user = userRepository.findByEmailIgnoreCase(email);
         log.info("get by email: {}, user: {}", email, user);
         return user;
-    }
-
-    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public User update(@RequestBody User user, @PathVariable int id) {
-        log.info("update user: {} id: {}, ", user, id);
-        ValidationUtil.assureIdConsistent(user, id);
-        if (user.getPassword() == null) {
-            User u = userRepository.getById(id);
-            u.setPassword(u.getPassword());
-        }
-        return userRepository.save(user);
     }
 
     @DeleteMapping("/{id}")
