@@ -7,22 +7,13 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import ru.vaseba.myrestaurant.error.NotFoundException;
-import ru.vaseba.myrestaurant.model.Restaurant;
-import ru.vaseba.myrestaurant.model.User;
 import ru.vaseba.myrestaurant.model.Voice;
-import ru.vaseba.myrestaurant.repository.RestaurantRepository;
-import ru.vaseba.myrestaurant.repository.UserRepository;
 import ru.vaseba.myrestaurant.repository.VoiceRepository;
-import ru.vaseba.myrestaurant.util.SecurityUtil;
 
 import java.net.URI;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
-
-import static ru.vaseba.myrestaurant.util.ValidationUtil.checkNew;
-
 
 @RestController
 @RequestMapping(value = VoiceController.URL, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -46,13 +37,8 @@ public class VoiceController {
         return voices;
     }
 
-    @PostMapping
-    public void voice (@RequestParam("restaurant_id") int restaurantId, @RequestParam("user_id") int userId) {
-        voiceRepository.getByUserIdAndRestaurantIdAndTimeOfVoicing(userId, restaurantId, LocalDate.now());
-    }
-
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Voice> create(Voice voice){
+    public ResponseEntity<Voice> create(@RequestBody Voice voice){
         Voice created = voiceRepository.save(voice);
         URI uri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(URL + "/{id}")

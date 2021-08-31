@@ -28,7 +28,7 @@ import static ru.vaseba.myrestaurant.util.ValidationUtil.checkNotFoundWithId;
 @Slf4j
 @Tag(name = "Restaurant Controller")
 public class RestaurantController {
-    static final String URL = "/api/restaurants";
+    static final String URL = "/api/admin/restaurants";
 
     private final RestaurantRepository restaurantRepository;
 
