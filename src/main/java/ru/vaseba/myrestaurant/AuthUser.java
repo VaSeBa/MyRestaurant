@@ -5,7 +5,6 @@ import lombok.ToString;
 import org.springframework.lang.NonNull;
 import ru.vaseba.myrestaurant.model.User;
 
-
 @Getter
 @ToString(of = "user")
 public class AuthUser extends org.springframework.security.core.userdetails.User {
@@ -20,6 +19,4 @@ public class AuthUser extends org.springframework.security.core.userdetails.User
     public int id() {
         return user.id();
     }
-
-
 }

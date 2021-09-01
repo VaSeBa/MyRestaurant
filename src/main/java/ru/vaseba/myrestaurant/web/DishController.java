@@ -3,6 +3,7 @@ package ru.vaseba.myrestaurant.web;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +20,6 @@ import static ru.vaseba.myrestaurant.util.ValidationUtil.checkNew;
 import static ru.vaseba.myrestaurant.util.ValidationUtil.checkNotFoundWithId;
 
 @RestController
-//@RequestMapping(value = DishController.URL, produces = MediaType.APPLICATION_JSON_VALUE)
 @Slf4j
 @Tag(name = "Dish Controller")
 public class DishController {
@@ -58,6 +58,7 @@ public class DishController {
     }
 
     @PostMapping(value = DishController.GET_ALL_BY_RESTAURANT, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(value = HttpStatus.CREATED)
     public ResponseEntity<Dish> createMenu(@PathVariable int restaurantsId, @RequestBody Dish dish) {
         Dish created = addDishInRestaurantMenu(dish, restaurantsId);
         URI uri = ServletUriComponentsBuilder.fromCurrentContextPath()
@@ -67,6 +68,7 @@ public class DishController {
     }
 
     @DeleteMapping("/{dish_id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int dish_id) {
         checkNotFoundWithId(dish_id != 0, dish_id);
     }
