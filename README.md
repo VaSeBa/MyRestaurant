@@ -43,26 +43,26 @@ http://localhost:8080/v3/api-docs
 ### get all user (for admin)
 `curl -s http://localhost:8080/api/admin/users --user admin@javaops.ru:admin`
 ### get user for id (for admin)
-curl -s http://localhost:8080/api/admin/users/(select id of user) --user admin@javaops.ru:admin
-get all restaurant 
-curl -s http://localhost:8080/api/restaurants --user admin@javaops.ru:admin
-get restaurant for id 
-curl -s http://localhost:8080/api/restaurants/(select id of user) --user admin@javaops.ru:admin
-get all dish 
-curl -s http://localhost:8080/api/dishes --user admin@javaops.ru:admin
-get dish for id 
-curl -s http://localhost:8080/api/dishes (select id of user) --user admin@javaops.ru:admin
-get dish for id and restaurant
-curl -s http://localhost:8080/api/admin/restaurants/{restaurantsId}/dishes --user admin@javaops.ru:admin
-get all voice (for admin)
-curl -s http://localhost:8080/api/voices --user admin@javaops.ru:admin
+`curl -s http://localhost:8080/api/admin/users/(select id of user) --user admin@javaops.ru:admin`
+### get all restaurant 
+`curl -s http://localhost:8080/api/restaurants --user admin@javaops.ru:admin`
+### get restaurant for id 
+`curl -s http://localhost:8080/api/restaurants/(select id of user) --user admin@javaops.ru:admin`
+### get all dish 
+`curl -s http://localhost:8080/api/dishes --user admin@javaops.ru:admin`
+### get dish for id 
+`curl -s http://localhost:8080/api/dishes (select id of user) --user admin@javaops.ru:admin`
+### get dish for id and restaurant
+`curl -s http://localhost:8080/api/admin/restaurants/{restaurantsId}/dishes --user admin@javaops.ru:admin`
+### get all voice (for admin)
+`curl -s http://localhost:8080/api/voices --user admin@javaops.ru:admin`
 
-get user account 
-curl -s http://localhost:8080/api/account --user first_user@gmail.com:password1
+### get user account 
+`curl -s http://localhost:8080/api/account --user first_user@gmail.com:password1`
 
 # HTTP requests
-
-add new User
+`
+### add new User
 
 POST http://localhost:8080/api/account/register
 Content-Type: application/json
@@ -73,7 +73,7 @@ Content-Type: application/json
       "password": "test"
 }
 
-add Dish in Restaurant
+### add Dish in Restaurant
 
 POST http://localhost:8080/api/admin/restaurants/1/dishes
 Authorization: Basic admin@javaops.ru admin
@@ -84,7 +84,7 @@ Content-Type: application/json
   "price": 100
 }
 
-add Restaurent
+### add Restaurent
 
 POST http://localhost:8080/api/admin/restaurants
 Authorization: Basic admin@javaops.ru admin
