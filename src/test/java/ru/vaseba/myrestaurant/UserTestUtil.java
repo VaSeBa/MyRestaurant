@@ -18,15 +18,15 @@ public class UserTestUtil {
     public static final int ADMIN_ID = 3;
     public static final String USER_MAIL = "first_user@gmail.com";
     public static final String ADMIN_MAIL = "admin@javaops.ru";
-    public static final User user = new User(USER_ID, "User_Name", USER_MAIL,"password1", List.of(Role.USER));
-    public static final User admin = new User(ADMIN_ID, "Admin_Name", ADMIN_MAIL,"admin", List.of(Role.ADMIN, Role.USER));
+    public static final User user = new User(USER_ID, "User_Name", USER_MAIL,"password1", List.of(Role.ROLE_USER));
+    public static final User admin = new User(ADMIN_ID, "Admin_Name", ADMIN_MAIL,"admin", List.of(Role.ROLE_ADMIN, Role.ROLE_USER));
 
     public static User getNew() {
-        return new User(null, "New_Name", "new@gmail.com", "newpass", List.of(Role.USER));
+        return new User(null, "New_Name", "new@gmail.com", "newpass", List.of(Role.ROLE_USER));
     }
 
     public static User getUpdated() {
-        return new User(USER_ID,"User_Name_Update","user_update@gmail.com","password_update", List.of(Role.USER));
+        return new User(USER_ID,"User_Name_Update","user_update@gmail.com","password_update", List.of(Role.ROLE_USER));
     }
 
     public static void assertEquals(User actual, User expected) {

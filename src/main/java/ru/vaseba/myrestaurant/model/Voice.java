@@ -8,7 +8,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "voice", uniqueConstraints =
         {@UniqueConstraint(columnNames =
-                {"user_id", "date"}, name = "voice_idx")})
+                {"user_id", "restaurants_id"}, name = "voice_unique_user_restaurant_id_idx")})
 @Getter
 @Setter
 @NoArgsConstructor
@@ -33,5 +33,4 @@ public class Voice extends BaseEntity {
         this.user = user;
         this.restaurant = restaurant;
     }
-
 }

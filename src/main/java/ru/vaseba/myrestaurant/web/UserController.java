@@ -17,7 +17,7 @@ import java.util.Optional;
 @Tag(name = "User Controller")
 @RequestMapping(value = UserController.URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class UserController {
-    static final String URL = "api/admin/users";
+    static final String URL = "api/users";
 
     public final UserRepository userRepository;
 

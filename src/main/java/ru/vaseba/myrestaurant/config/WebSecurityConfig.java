@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -58,13 +59,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/api/account/register").anonymous()
-                .antMatchers("/api/account").hasAnyRole(Role.USER.name(), Role.ADMIN.name())
-                .antMatchers("/api/admin/users").hasRole(Role.ADMIN.name())
-                .antMatchers("/api/**").permitAll()
-                .antMatchers("/api/voice/**").hasAnyRole(Role.USER.name(), Role.ADMIN.name())
-                .antMatchers("/api/restaurants/**").hasAnyRole(Role.USER.name(), Role.ADMIN.name())
-                .antMatchers("/api/dishes/**").hasAnyRole(Role.USER.name(), Role.ADMIN.name())
+                .antMatchers("/api/users").hasAuthority(Role.ROLE_ADMIN.getAuthority())
+                .antMatchers(HttpMethod.GET,"/api/**").authenticated()
+                .antMatchers("/api/register").anonymous()
                 .and().httpBasic()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().csrf().disable();
