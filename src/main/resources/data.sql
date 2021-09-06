@@ -1,6 +1,6 @@
 INSERT INTO users (name, email, password)
 VALUES ('User_Name', 'first_user@gmail.com', '{noop}password1'),
-       ('User_Name', 'second_user@gmail.com', '{noop}password2'),
+       ('Second_User_Name', 'second_user@gmail.com', '{noop}password2'),
        ('Admin_Name', 'admin@javaops.ru', '{noop}admin');
 
 INSERT INTO restaurant (id, name) VALUES
