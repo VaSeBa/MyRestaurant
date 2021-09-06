@@ -16,32 +16,14 @@ spring:
         # https://stackoverflow.com/questions/21257819/what-is-the-difference-between-hibernate-jdbc-fetch-size-and-hibernate-jdbc-batc
         jdbc.batch_size: 20
   datasource:
-    # ImMemory
     url: jdbc:h2:mem:myrestaurent
-    #    tcp: jdbc:h2:tcp://localhost:9092/mem:voting
-    # Relative path from home
-    #    url: jdbc:h2:~/voting
-    #    tcp: jdbc:h2:tcp://localhost:9092/~/voting
     username: sa
     password:
-  h2.console.enabled: true
-
-  data.rest:
-    #  https://docs.spring.io/spring-data/rest/docs/current/reference/html/#getting-started.basic-settings
-    basePath: /api
-    defaultPageSize: 20
-    returnBodyOnCreate: true
-    #    GET http://localhost:8080/api
-    #    GET http://localhost:8080/api/users
-    #    GET http://localhost:8080/api/users/1
-    #    GET http://localhost:8080/api/users/search
-    #    GET http://localhost:8080/api/users/search/by-email?email=User@gmail.com
 
 logging:
     level:
       root: WARN
       ru.javaops.bootjava: DEBUG
-#      org.springframework.security.web.FilterChainProxy: DEBUG
 
 server.servlet:
   encoding:

@@ -5,7 +5,6 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.List;
 
-
 @Entity
 @Table(name = "restaurant", uniqueConstraints = {@UniqueConstraint(columnNames = "name", name = "unique_restaurant_name_idx")})
 @Getter
@@ -16,10 +15,6 @@ public class Restaurant extends NamedEntity {
     @JsonManagedReference(value = "restaurant")
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "restaurant")
     private List<Dish> menu;
-
-//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
-//    @JsonManagedReference(value = "restaurant-voices")
-//    private List<Voice> voices;
 
     public Restaurant(Integer id, String name, List<Dish> menu) {
         super(id, name);

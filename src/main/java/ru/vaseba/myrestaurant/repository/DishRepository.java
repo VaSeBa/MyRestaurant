@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.vaseba.myrestaurant.model.Dish;
 
 import java.util.List;
-import java.util.Optional;
 
 @Transactional(readOnly = true)
 @Tag(name = "Dish Controller")

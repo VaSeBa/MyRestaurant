@@ -19,9 +19,9 @@ INSERT INTO dish (name, price, restaurants_id) VALUES
 ('Рамен', 100, 2),
 ('Суши', 150, 2);
 
-INSERT INTO voice (id, user_id, restaurants_id, date, time) VALUES
-(1, 1, 1, today, now()),
-(2, 2, 2, '2021-08-19', '11:10');
+INSERT INTO voice (id, user_id, restaurants_id, date) VALUES
+(1, 1, 1, today),
+(2, 2, 2, '2021-08-19');
 
 INSERT INTO user_roles (role, user_id)
 VALUES ('USER', 1),

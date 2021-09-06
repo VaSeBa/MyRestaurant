@@ -12,7 +12,6 @@ import ru.vaseba.myrestaurant.repository.UserRepository;
 import java.util.List;
 import java.util.Optional;
 
-
 @RestController
 @Slf4j
 @Tag(name = "User Controller")

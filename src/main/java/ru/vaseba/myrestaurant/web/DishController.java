@@ -25,7 +25,7 @@ import static ru.vaseba.myrestaurant.util.ValidationUtil.checkNotFoundWithId;
 public class DishController {
     static final String GET_ALL = "/api/dishes";
     static final String GET_ALL_BY_RESTAURANT = "/api/admin/restaurants/{restaurantsId}/dishes";
-    static final String GET_DISH_BY_ID = "/api/dish/{dish_id}";
+    static final String GET_DISH_BY_ID = "/api/dishes/{dish_id}";
 
     private final DishRepository dishRepository;
     private final RestaurantRepository restaurantRepository;
