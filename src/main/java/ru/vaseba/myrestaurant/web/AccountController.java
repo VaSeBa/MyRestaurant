@@ -43,7 +43,6 @@ public class AccountController {
 
     @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @CacheEvict(value = "users", key = "#authUser.username")
     public void delete(@AuthenticationPrincipal AuthUser authUser) {
         log.info("delete {}", authUser);
         userRepository.deleteById(authUser.id());
@@ -63,7 +62,6 @@ public class AccountController {
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @CachePut(value = "users", key = "#authUser.username")
     public User update(@Valid @RequestBody User user, @AuthenticationPrincipal AuthUser authUser) {
         log.info("update {} to {}", authUser, user);
         User oldUser = authUser.getUser();

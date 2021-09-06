@@ -8,17 +8,15 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import ru.vaseba.myrestaurant.UserTestUtil;
-import ru.vaseba.myrestaurant.model.User;
 import ru.vaseba.myrestaurant.repository.UserRepository;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ru.vaseba.myrestaurant.UserTestUtil.*;
-import static ru.vaseba.myrestaurant.util.JsonUtil.writeValue;
 
 class AccountControllerTest extends AbstractControllerTest {
-    static final String URL = "/api/users/";
+    static final String URL = "/api/admin/users/";
 
     @Autowired
     private UserRepository userRepository;
@@ -29,7 +27,7 @@ class AccountControllerTest extends AbstractControllerTest {
         perform(MockMvcRequestBuilders.get(URL + USER_ID))
                 .andExpect(status().isOk())
                 .andDo(print())
-                .andExpect(content().contentTypeCompatibleWith(MediaTypes.HAL_JSON_VALUE))
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonMatcher(user, UserTestUtil::assertNoIdEquals));
     }
 
@@ -39,24 +37,7 @@ class AccountControllerTest extends AbstractControllerTest {
         perform(MockMvcRequestBuilders.get(URL))
                 .andExpect(status().isOk())
                 .andDo(print())
-                .andExpect(content().contentTypeCompatibleWith(MediaTypes.HAL_JSON_VALUE));
-    }
-
-    @Test
-    @WithUserDetails(value = ADMIN_MAIL)
-    void getByEmail() throws Exception {
-        perform(MockMvcRequestBuilders.get(URL + "search/by-email?email=" + ADMIN_MAIL))
-                .andExpect(status().isOk())
-                .andDo(print())
-                .andExpect(content().contentTypeCompatibleWith(MediaTypes.HAL_JSON_VALUE))
-                .andExpect(jsonMatcher(admin, UserTestUtil::assertNoIdEquals));
-    }
-
-    @Test
-    @WithUserDetails(value = USER_MAIL)
-    void getForbidden() throws Exception {
-        perform(MockMvcRequestBuilders.get(URL))
-                .andExpect(status().isForbidden());
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
     }
 
     @Test
@@ -68,25 +49,4 @@ class AccountControllerTest extends AbstractControllerTest {
         Assertions.assertTrue(userRepository.findById(ADMIN_ID).isPresent());
     }
 
-    @Test
-    @WithUserDetails(value = ADMIN_MAIL)
-    void create() throws Exception {
-        User newUser = UserTestUtil.getNew();
-        perform(MockMvcRequestBuilders.post(URL)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(writeValue(newUser)))
-                .andExpect(status().isCreated())
-                .andExpect(jsonMatcher(newUser, UserTestUtil::assertNoIdEquals));
-    }
-
-    @Test
-    @WithUserDetails(value = ADMIN_MAIL)
-    void update() throws Exception {
-        User updated = UserTestUtil.getUpdated();
-        perform(MockMvcRequestBuilders.put(URL + USER_ID)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(writeValue(updated)))
-                .andExpect(status().isNoContent());
-        UserTestUtil.assertEquals(updated, userRepository.findById(USER_ID).orElseThrow());
-    }
 }
