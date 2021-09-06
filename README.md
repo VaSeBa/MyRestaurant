@@ -48,10 +48,10 @@ http://localhost:8080/v3/api-docs
 `curl -s http://localhost:8080/api/restaurants --user admin@javaops.ru:admin`
 ### get restaurant for id 
 `curl -s http://localhost:8080/api/restaurants/(select id of user) --user admin@javaops.ru:admin`
-### get all dish 
+### get all dishes 
 `curl -s http://localhost:8080/api/dishes --user admin@javaops.ru:admin`
 ### get dish for id 
-`curl -s http://localhost:8080/api/dishes (select id of user) --user admin@javaops.ru:admin`
+`curl -s http://localhost:8080/api/dishes/1 (select id of user) --user admin@javaops.ru:admin`
 ### get dish for id and restaurant
 `curl -s http://localhost:8080/api/admin/restaurants/{restaurantsId}/dishes --user admin@javaops.ru:admin`
 ### get all voice (for admin)
@@ -61,38 +61,38 @@ http://localhost:8080/v3/api-docs
 `curl -s http://localhost:8080/api/account --user first_user@gmail.com:password1`
 
 # HTTP requests
-`
+
 ### add new User
 
-POST http://localhost:8080/api/account/register
+`POST http://localhost:8080/api/account/register
 Content-Type: application/json
 
 {
       "email": "test@test.com",
       "name": "Test",
       "password": "test"
-}
+}`
 
 ### add Dish in Restaurant
 
-POST http://localhost:8080/api/admin/restaurants/1/dishes
+`POST http://localhost:8080/api/admin/restaurants/1/dishes
 Authorization: Basic admin@javaops.ru admin
 Content-Type: application/json
 
 {
   "name": "new",
   "price": 100
-}
+}`
 
 ### add Restaurent
 
-POST http://localhost:8080/api/admin/restaurants
+`POST http://localhost:8080/api/admin/restaurants
 Authorization: Basic admin@javaops.ru admin
 Content-Type: application/json
 
 {
   "name": "New"
-}
+}`
 
 
 
