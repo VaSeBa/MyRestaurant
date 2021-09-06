@@ -41,8 +41,8 @@ http://localhost:8080/v3/api-docs
 # Curl 
 
 ### get all user (for admin)
-'curl -s http://localhost:8080/api/admin/users --user admin@javaops.ru:admin'
-get user for id (for admin)
+`curl -s http://localhost:8080/api/admin/users --user admin@javaops.ru:admin`
+### get user for id (for admin)
 curl -s http://localhost:8080/api/admin/users/(select id of user) --user admin@javaops.ru:admin
 get all restaurant 
 curl -s http://localhost:8080/api/restaurants --user admin@javaops.ru:admin
