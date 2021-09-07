@@ -12,8 +12,4 @@ import java.util.List;
 @Transactional(readOnly = true)
 @Tag(name = "Dish Controller")
 public interface DishRepository extends JpaRepository<Dish, Integer> {
-
-    @Query("SELECT d FROM Dish d WHERE d.restaurant.id = :restaurantId")
-    List<Dish> getAllByRestaurant(@Param("restaurantId") int restaurantsId);
-
 }

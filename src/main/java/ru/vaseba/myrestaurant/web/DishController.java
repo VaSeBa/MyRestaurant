@@ -24,7 +24,7 @@ import static ru.vaseba.myrestaurant.util.ValidationUtil.checkNotFoundWithId;
 @Tag(name = "Dish Controller")
 public class DishController {
     static final String GET_ALL = "/api/dishes";
-    static final String GET_ALL_BY_RESTAURANT = "/api/admin/restaurants/{restaurantsId}/dishes";
+    static final String CREATE = "/api/dishes";
     static final String GET_DISH_BY_ID = "/api/dishes/{dish_id}";
 
     private final DishRepository dishRepository;
@@ -39,30 +39,23 @@ public class DishController {
     @GetMapping(value = DishController.GET_ALL, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Dish> getAll() {
         List<Dish> dishes = dishRepository.findAll();
-        log.info("get all users: {}", dishes);
-        return dishes;
-    }
-
-    @GetMapping(value = DishController.GET_ALL_BY_RESTAURANT, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Dish> getAll(@PathVariable int restaurantsId) {
-        List<Dish> dishes = dishRepository.getAllByRestaurant(restaurantsId);
-        log.info("get all users: {}", dishes);
+        log.info("get all dishes: {}", dishes);
         return dishes;
     }
 
     @GetMapping(GET_DISH_BY_ID)
     public Optional<Dish> getById(@PathVariable("dish_id") int dishId) {
         Optional<Dish> dish = dishRepository.findById(dishId);
-        log.info("get Dish by id: {}, user: {}", dishId, dish);
+        log.info("get Dish by id: {}, dish: {}", dishId, dish);
         return dish;
     }
 
-    @PostMapping(value = DishController.GET_ALL_BY_RESTAURANT, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = DishController.CREATE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.CREATED)
-    public ResponseEntity<Dish> createMenu(@PathVariable int restaurantsId, @RequestBody Dish dish) {
-        Dish created = addDishInRestaurantMenu(dish, restaurantsId);
+    public ResponseEntity<Dish> createMenu(@RequestBody Dish dish) {
+        Dish created = dishRepository.save(dish);
         URI uri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path(GET_ALL_BY_RESTAURANT + "/{dish_id}")
+                .path(CREATE + "/{dish_id}")
                 .buildAndExpand(created.getId()).toUri();
         return ResponseEntity.created(uri).body(created);
     }
@@ -70,14 +63,6 @@ public class DishController {
     @DeleteMapping("/{dish_id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int dish_id) {
-        checkNotFoundWithId(dish_id != 0, dish_id);
-    }
-
-
-    //ToDo: come up with where you can move instead of the service
-    public Dish addDishInRestaurantMenu(Dish dish, int restaurantId) {
-        checkNew(dish);
-        dish.setRestaurant(restaurantRepository.getById(restaurantId));
-        return dishRepository.save(dish);
+        dishRepository.deleteById(dish_id);
     }
 }

@@ -50,7 +50,7 @@ public class AccountController {
     @ResponseStatus(value = HttpStatus.CREATED)
     public ResponseEntity<User> register(@Valid @RequestBody User user) {
         log.info("register {}", user);
-        user.setRoles(EnumSet.of(Role.ROLE_USER));
+        user.setRoles(EnumSet.of(Role.USER));
         user = userRepository.save(user);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/api/account")

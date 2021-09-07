@@ -59,9 +59,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/api/users").hasAuthority(Role.ROLE_ADMIN.getAuthority())
-                .antMatchers(HttpMethod.GET,"/api/**").authenticated()
-                .antMatchers("/api/register").anonymous()
+                .antMatchers("/api/account/register").anonymous()
+                .antMatchers("/api/account").hasRole(Role.USER.name())
+                .antMatchers(HttpMethod.GET,"/api/restaurants").hasAnyRole(Role.USER.name(), Role.ADMIN.name())
+                .antMatchers(HttpMethod.GET,"/api/dishes").hasAnyRole(Role.USER.name(), Role.ADMIN.name())
+                .antMatchers( "/api/dishes/**").hasRole( Role.ADMIN.name())
+                .antMatchers( "/api/restaurants/**").hasRole(Role.ADMIN.name())
+                .antMatchers( "/api/voices/**").hasRole(Role.USER.name())
+                .antMatchers("/api/admin/users").hasRole(Role.ADMIN.name())
                 .and().httpBasic()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().csrf().disable();

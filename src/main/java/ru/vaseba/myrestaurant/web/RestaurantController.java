@@ -60,7 +60,7 @@ public class RestaurantController {
     @DeleteMapping( "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id) {
-        checkNotFoundWithId(id != 0, id);
+        restaurantRepository.deleteById(id);
     }
 
 
