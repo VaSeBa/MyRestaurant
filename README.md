@@ -40,27 +40,27 @@ mvn spring-boot:run (in bash)
 ```http://localhost:8080/swagger-ui.html```
 ```http://localhost:8080/v3/api-docs```
 
+
+
 # Curl 
 
 ### get all user (for admin)
 `curl -s http://localhost:8080/api/admin/users --user admin@javaops.ru:admin`
 ### get user for id (for admin)
-`curl -s http://localhost:8080/api/admin/users/(select id of user) --user admin@javaops.ru:admin`
+`curl -s http://localhost:8080/api/admin/users/1 (select id of user) --user admin@javaops.ru:admin`
 ### get all restaurant 
 `curl -s http://localhost:8080/api/restaurants --user admin@javaops.ru:admin`
 ### get restaurant for id 
-`curl -s http://localhost:8080/api/restaurants/(select id of user) --user admin@javaops.ru:admin`
+`curl -s http://localhost:8080/api/restaurants/1 (select id of user) --user admin@javaops.ru:admin`
 ### get all dishes 
 `curl -s http://localhost:8080/api/dishes --user admin@javaops.ru:admin`
 ### get dish for id 
 `curl -s http://localhost:8080/api/dishes/1 (select id of user) --user admin@javaops.ru:admin`
-### get dish for id and restaurant
-`curl -s http://localhost:8080/api/admin/restaurants/{restaurantsId}/dishes --user admin@javaops.ru:admin`
-### get all voice (for admin)
-`curl -s http://localhost:8080/api/voices --user admin@javaops.ru:admin`
 
 ### get user account 
 `curl -s http://localhost:8080/api/account --user first_user@gmail.com:password1`
+
+
 
 # HTTP requests
 
