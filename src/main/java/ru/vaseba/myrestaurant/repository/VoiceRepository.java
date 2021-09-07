@@ -12,5 +12,5 @@ import java.time.LocalDate;
 @Tag(name = "Voice Controller")
 public interface VoiceRepository extends JpaRepository<Voice, Integer> {
 
-    Voice findVoiceByDateAndUserId(@NotNull LocalDate date, Integer userId);
+    Voice getVoiceByDateAndUserId(@NotNull LocalDate date, int userId);
 }

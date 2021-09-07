@@ -26,7 +26,8 @@ import java.time.LocalDate;
 @Tag(name = "Voice Controller")
 @RequestMapping(value = VoiceController.URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class VoiceController {
-    static final String URL = "/api/voices";
+    static final String URL = "/api/restaurants/voices";
+    static final String CREATE = "/api/restaurants/{restaurantsId}/voices/{voicesId}";
 
     private final VoiceRepository voiceRepository;
     private final RestaurantRepository restaurantRepository;
@@ -39,14 +40,14 @@ public class VoiceController {
 
     @GetMapping
     public Voice getVoiceByUserIdAndDate() {
-        return voiceRepository.findVoiceByDateAndUserId(LocalDate.now(), SecurityUtil.authUserId());
+        return voiceRepository.getVoiceByDateAndUserId(LocalDate.now(), SecurityUtil.authUserId());
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.CREATED)
     public ResponseEntity<Voice> create(@AuthenticationPrincipal AuthUser authUser, @RequestParam int restaurantId) {
         Restaurant restaurant = restaurantRepository.getById(restaurantId);
-        Voice created = voiceRepository.findVoiceByDateAndUserId(LocalDate.now(), authUser.id());
+        Voice created = voiceRepository.getVoiceByDateAndUserId(LocalDate.now(), authUser.id());
         if (created != null) {
             created.setRestaurant(restaurant);
         } else {
@@ -54,7 +55,7 @@ public class VoiceController {
         }
 
         URI uri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path(URL + "/{voiceId}")
+                .path(CREATE)
                 .buildAndExpand(created.getId()).toUri();
 
         return ResponseEntity.created(uri).body(created);
