@@ -3,9 +3,6 @@ package ru.vaseba.myrestaurant;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultMatcher;
-import ru.vaseba.myrestaurant.model.Role;
-import ru.vaseba.myrestaurant.model.User;
-import ru.vaseba.myrestaurant.util.JsonUtil;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
