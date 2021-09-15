@@ -38,16 +38,8 @@ mvn spring-boot:run
 2. Раскрыть его, нажать на кнопку `Try it out`
 3. После чего нажать на появившуюся кнопку `Execute`
 
-Запрос будет выполнен для авторизации администратора (тестовый шаблон), в ответ на запрос будет получен JSON-объект
-(Response body):
-```json
-{
-  "email": "admin@foodvoice.ru",
-  "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBmb29kdm9pY2UucnUiLCJyb2xlcyI6WyJST0xFX1VTRVIiLCJST0xFX0FETUlOIl0sImlhdCI6MTU4OTQwNzMyNywiZXhwIjoxNTg5NDEwOTI3fQ.aD2Vpl-_SSHXYRNfE6sB6KF_Y5nlvbOeIzWPvOvDET0"
-}
-``` 
 
-WT-токен из ответа выше потребуется для выполнения тех запросов, где требуется авторизация (подробнее в таблицах ниже).
+JWT-токен из ответа выше потребуется для выполнения тех запросов, где требуется авторизация (подробнее в таблицах ниже).
 
 Для авторизации запросов в Swagger необходимо:
 1. Скопировать токен
