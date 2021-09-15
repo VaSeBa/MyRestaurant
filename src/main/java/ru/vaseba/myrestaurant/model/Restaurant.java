@@ -23,6 +23,11 @@ import static javax.persistence.FetchType.LAZY;
 @ToString(callSuper = true, exclude = "menus")
 public class Restaurant extends BaseNamedEntity {
 
+    @NotBlank
+    @Size(min = 1, max = 255)
+    @Column(name = Meta.Restaurant.ADDRESS)
+    private String address;
+
     @Email
     @NotBlank
     @Size(min = 3, max = 254)
@@ -30,13 +35,8 @@ public class Restaurant extends BaseNamedEntity {
     @Column(name = Meta.Restaurant.EMAIL, nullable = false)
     private String email;
 
-    @NotBlank
-    @Size(min = 1, max = 255)
-    @Column(name = Meta.Restaurant.ADDRESS)
-    private String address;
-
     @OneToMany(mappedBy = "restaurant", fetch = LAZY, cascade = {PERSIST, MERGE, REFRESH})
     @OrderBy("name")
-    private List<Menu> menus;
+    private List<Menu> menus = List.of();
 
 }

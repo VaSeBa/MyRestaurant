@@ -13,3 +13,12 @@ spring:
         format_sql: true
   flyway:
     group: true
+
+jwt:
+  token:
+    secret: 'FoodVoiceRESTfulAPI'
+    expired: 3600000
+
+food-voice:
+  voice:
+    change-stop-time: '11:00'

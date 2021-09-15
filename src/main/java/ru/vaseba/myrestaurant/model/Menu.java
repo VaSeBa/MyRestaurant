@@ -9,6 +9,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
+import static java.lang.Boolean.FALSE;
 import static javax.persistence.CascadeType.*;
 import static javax.persistence.FetchType.LAZY;
 
@@ -25,10 +26,10 @@ public class Menu extends BaseNamedEntity {
 
     @NotNull
     @Column(name = Meta.Menu.ACTUAL)
-    private Boolean actual;
+    private Boolean actual = FALSE;
 
     @OneToMany(mappedBy = "menu", fetch = LAZY, cascade = {PERSIST, MERGE, REFRESH})
     @OrderBy("name")
-    private List<Dish> dishes;
+    private List<Dish> dishes = List.of();
 
 }

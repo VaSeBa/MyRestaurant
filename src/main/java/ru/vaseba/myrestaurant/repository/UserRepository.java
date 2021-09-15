@@ -10,14 +10,18 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Transactional(readOnly = true)
-public interface UserRepository extends BaseNamedEntityJpaRepository<User> {
+public interface UserRepository extends BaseEntityJpaRepository<User> {
 
     @EntityGraph(attributePaths = {"roles"}, type = EntityGraph.EntityGraphType.LOAD)
-    @Query("SELECT u FROM User u WHERE u.id = :id")
-    Optional<User> findWithRoles(@Param("id") UUID id);
+    @Query("SELECT u FROM User u WHERE u.id = :id AND u.status = 1")
+    Optional<User> findByIdWithRoles(@Param("id") UUID id);
+
+    @EntityGraph(attributePaths = {"roles"}, type = EntityGraph.EntityGraphType.LOAD)
+    @Query("SELECT u FROM User u WHERE u.email = :email AND u.status = 1")
+    Optional<User> findByEmailWithRoles(@Param("email") String email);
 
     @EntityGraph(attributePaths = {"voices"}, type = EntityGraph.EntityGraphType.LOAD)
-    @Query("SELECT u FROM User u WHERE u.id = :id")
-    Optional<User> findWithVoices(@Param("id") UUID id);
+    @Query("SELECT u FROM User u WHERE u.id = :id AND u.status = 1")
+    Optional<User> findByIdWithVoices(@Param("id") UUID id);
 
 }

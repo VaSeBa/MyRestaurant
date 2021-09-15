@@ -5,6 +5,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import ru.vaseba.myrestaurant.model.Role;
 
+
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)

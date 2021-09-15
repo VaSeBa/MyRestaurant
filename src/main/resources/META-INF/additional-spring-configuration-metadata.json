@@ -1,0 +1,18 @@
+{
+  "properties": [
+    {
+      "name": "food-voice.voice.change-stop-time",
+      "type": "java.lang.String",
+      "description": "Время, до которого пользователь может изменить выбор ресторана для обеда, в формате HH:mm."
+    },
+    {
+      "name": "jwt.token.expired",
+      "type": "java.lang.String",
+      "description": "Время истечения JWT-токена в миллисекундах."
+    },
+    {
+      "name": "jwt.token.secret",
+      "type": "java.lang.String",
+      "description": "Секретный ключ для кодирования токена."
+    }
+  ] }

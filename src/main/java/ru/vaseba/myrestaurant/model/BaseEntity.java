@@ -14,6 +14,9 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import static ru.vaseba.myrestaurant.model.Status.ACTIVE;
+
+
 @MappedSuperclass
 @Data
 @EqualsAndHashCode(exclude = {"created", "updated", "status"})
@@ -29,7 +32,9 @@ public abstract class BaseEntity implements Serializable {
     private UUID id;
 
     @CreatedDate
-    @Column(name = Meta.BaseEntity.CREATED, updatable = false, nullable = false)
+    @Column(name = Meta.BaseEntity.CREATED, updatable = false, nullable = false,
+            columnDefinition = "SMALLINT DEFAULT now() NOT NULL"
+    )
     private LocalDateTime created;
 
     @LastModifiedDate
@@ -40,6 +45,6 @@ public abstract class BaseEntity implements Serializable {
     @Column(name = Meta.BaseEntity.STATUS, insertable = false, nullable = false,
             columnDefinition = "SMALLINT DEFAULT 1 NOT NULL"
     )
-    private Status status;
+    private Status status = ACTIVE;
 
 }

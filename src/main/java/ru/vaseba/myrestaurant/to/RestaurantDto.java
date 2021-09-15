@@ -1,5 +1,6 @@
 package ru.vaseba.myrestaurant.to;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -14,9 +15,12 @@ import static java.util.stream.Collectors.toList;
 @ToString(callSuper = true)
 public class RestaurantDto extends BaseNamedDto<Restaurant> {
 
-    private String email;
+    @ApiModelProperty(position = 2, required = true, example = "New address")
     private String address;
-    private List<MenuDto> menus;
+    @ApiModelProperty(position = 3, required = true, example = "new@foodvoice.ru")
+    private String email;
+    @ApiModelProperty(position = 4)
+    private List<MenuDto> menus = List.of();
 
     public RestaurantDto() {
         super();
