@@ -7,9 +7,9 @@ import org.hibernate.annotations.Parameter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import ru.vaseba.myrestaurant.meta.Meta;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -25,21 +25,21 @@ public abstract class BaseEntity implements Serializable {
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator", parameters = {
             @Parameter(name = "uuid_gen_strategy_class", value = "org.hibernate.id.uuid.CustomVersionOneStrategy")
     })
-    @Column(name = "uuid", updatable = false, nullable = false)
+    @Column(name = Meta.BaseEntity.ID_COLUMN, updatable = false, nullable = false)
     private UUID id;
 
-    @NotNull
     @CreatedDate
-    @Column(name = "created", updatable = false, nullable = false)
+    @Column(name = Meta.BaseEntity.CREATED, updatable = false, nullable = false)
     private LocalDateTime created;
 
     @LastModifiedDate
-    @Column(name = "updated")
+    @Column(name = Meta.BaseEntity.UPDATED)
     private LocalDateTime updated;
 
-    @NotNull
     @Enumerated(EnumType.ORDINAL)
-    @Column(name = "status", nullable = false)
+    @Column(name = Meta.BaseEntity.STATUS, insertable = false, nullable = false,
+            columnDefinition = "SMALLINT DEFAULT 1 NOT NULL"
+    )
     private Status status;
 
 }

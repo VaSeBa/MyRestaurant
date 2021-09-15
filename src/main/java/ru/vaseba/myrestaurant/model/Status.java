@@ -1,5 +1,5 @@
 package ru.vaseba.myrestaurant.model;
 
-public enum  Status {
+public enum Status {
     DELETED, ACTIVE, NOT_ACTIVE
 }
