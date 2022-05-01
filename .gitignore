@@ -5,3 +5,4 @@ target/
 *.iml
 *.ipr
 
+/src/main/resources/application.yaml
