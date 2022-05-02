@@ -17,7 +17,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
-@Table(name = "vote", uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "actual_date"}, name = "uk_vote")})
+@Table(name = "vote", uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "date"}, name = "uk_vote")})
 @Getter
 @Setter
 @NoArgsConstructor
@@ -29,11 +29,11 @@ public class Vote extends BaseEntity {
     @NotNull
     private User user;
 
-    @Column(name = "actual_date", nullable = false)
+    @Column(name = "date", nullable = false)
     @NotNull
     private LocalDate actualDate;
 
-    @Column(name = "actual_time", nullable = false)
+    @Column(name = "time", nullable = false)
     @NotNull
     private LocalTime actualTime;
 
