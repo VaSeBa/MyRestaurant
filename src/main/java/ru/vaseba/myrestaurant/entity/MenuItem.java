@@ -32,7 +32,6 @@ public class MenuItem extends NamedEntity {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @NotNull
     @JsonIgnore
     private Restaurant restaurant;
 }
