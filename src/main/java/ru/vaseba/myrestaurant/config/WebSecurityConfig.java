@@ -4,6 +4,7 @@ package ru.vaseba.myrestaurant.config;
 import static ru.vaseba.myrestaurant.util.UserUtil.PASSWORD_ENCODER;
 
 import java.util.Optional;
+
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +51,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
+                .antMatchers("/api/restaurants/**").permitAll()
                 .antMatchers("/api/admin/**").hasRole(Role.ADMIN.name())
                 .antMatchers(HttpMethod.POST, "/api/profile").anonymous()
                 .antMatchers("/api/**").authenticated()
