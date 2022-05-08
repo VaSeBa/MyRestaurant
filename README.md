@@ -15,10 +15,15 @@ Admin: admin@gmail.com / admin
 - Протестируйте работу контроллера через Swagger/ браузер/ IDEA Http Client/ Postman
 
 ```
-GET http://localhost:8080/api/admin/restaurants/1/menu-items
+[GET] (http://localhost:8080/api/admin/restaurants/1/menu-items)
 GET http://localhost:8080/api/admin/restaurants/1/menu-items/1
 GET http://localhost:8080/api/admin/restaurants/2/menu-items/4
 GET http://localhost:8080/api/admin/restaurants/1/menu-items/by-date?date=2021-06-05
+GET http://localhost:8080/api/restaurants
+GET http://localhost:8080/api/restaurants/menu_today
+GET http://localhost:8080/api/restaurants/1/menu_today
+
+
 POST http://localhost:8080/api/admin/restaurants/1/menu-items
 Authorization: Basic admin@gmail.com admin
 Content-Type: application/json
@@ -49,4 +54,5 @@ Content-Type: application/json
   "actualDate": "2021-06-11"
 }
 ```
+
 
