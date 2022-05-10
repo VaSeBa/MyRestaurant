@@ -1,5 +1,6 @@
 package ru.vaseba.myrestaurant.web.restaurant;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.vaseba.myrestaurant.entity.Restaurant;
 import ru.vaseba.myrestaurant.repository.RestaurantRepository;
+import ru.vaseba.myrestaurant.web.View;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -29,13 +31,14 @@ public class RestaurantController {
     }
 
     @GetMapping("/menu_today")
+    @JsonView(View.RestaurantWithMeals.class)
     public List<Restaurant> getWithMenuForToday() {
         log.info("getWithMenuForToday");
         return repository.getWithMenuByDate(LocalDate.now());
     }
 
-
     @GetMapping("/{id}/menu_today")
+    @JsonView(View.RestaurantWithMeals.class)
     public Restaurant getWithMenuByRestaurantForToday(@PathVariable int id) {
         log.info("getWithMenuByRestaurantForToday {}", id);
         repository.checkAvailable(id);
