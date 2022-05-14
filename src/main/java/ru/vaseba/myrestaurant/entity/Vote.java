@@ -2,13 +2,10 @@ package ru.vaseba.myrestaurant.entity;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,6 +24,7 @@ public class Vote extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @NotNull
+    @JsonIgnore
     private User user;
 
     @Column(name = "date", nullable = false)
@@ -38,7 +36,12 @@ public class Vote extends BaseEntity {
     private LocalTime actualTime;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @NotNull
+//    https://stackoverflow.com/a/44539145/548473
+    @JoinColumn(name = "restaurant_id", insertable = false, updatable = false)
+    @JsonIgnore
     // No cascade, disable for already voted restaurant
     private Restaurant restaurant;
+
+    @Column(name = "restaurant_id")
+    private int restaurantId;
 }
