@@ -22,8 +22,8 @@ public class RestaurantTestData {
     public static final Restaurant wasabi = new Restaurant(WASABI_ID, "Васаби", "ул. Бумажная, д.20");
 
     public static final MenuItem mac_1 = new MenuItem(1, "Филе-о-Фиш", 12700, LocalDate.now(), mac);
-    public static final MenuItem mac_2 = new MenuItem(2, "Чикенбургер", 5000, LocalDate.now(), mac);
-    public static final MenuItem mac_3 = new MenuItem(3, "Чикен Макнаггетс (20шт)", 27200, LocalDate.now(), mac);
+    public static final MenuItem mac_2 = new MenuItem(3, "Чикен Макнаггетс (20шт)", 27200, LocalDate.now(), mac);
+    public static final MenuItem mac_3 = new MenuItem(2, "Чикенбургер", 5000, LocalDate.now(), mac);
 
     public static final MenuItem wasabi_7 = new MenuItem(7, "Ролл Сочная креветка", 25700, LocalDate.now(), wasabi);
     public static final MenuItem wasabi_8 = new MenuItem(8, "Ролл Огонь", 31700, LocalDate.now(), wasabi);

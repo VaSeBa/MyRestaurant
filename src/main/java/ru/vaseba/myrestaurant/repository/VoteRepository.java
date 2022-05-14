@@ -11,6 +11,8 @@ import java.util.Optional;
 
 @Transactional(readOnly = true)
 public interface VoteRepository extends BaseRepository<Vote> {
+    @Transactional
+    @Modifying
     @Query("DELETE FROM Vote v WHERE v.restaurantId=:restaurantId")
     void deleteByRestaurantId(int restaurantId);
 

@@ -14,7 +14,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
-@Table(name = "vote", uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "date"}, name = "uk_vote")})
+@Table(name = "vote", uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "actual_date"}, name = "uk_vote")})
 @Getter
 @Setter
 @NoArgsConstructor
@@ -27,11 +27,11 @@ public class Vote extends BaseEntity {
     @JsonIgnore
     private User user;
 
-    @Column(name = "date", nullable = false)
+    @Column(name = "actual_date", nullable = false)
     @NotNull
     private LocalDate actualDate;
 
-    @Column(name = "time", nullable = false)
+    @Column(name = "actual_time", nullable = false)
     @NotNull
     private LocalTime actualTime;
 
@@ -44,4 +44,12 @@ public class Vote extends BaseEntity {
 
     @Column(name = "restaurant_id")
     private int restaurantId;
+
+    public Vote(Integer id, @NotNull User user, @NotNull LocalDate actualDate, @NotNull LocalTime actualTime, int restaurantId) {
+        super(id);
+        this.user = user;
+        this.actualDate = actualDate;
+        this.actualTime = actualTime;
+        this.restaurantId = restaurantId;
+    }
 }
