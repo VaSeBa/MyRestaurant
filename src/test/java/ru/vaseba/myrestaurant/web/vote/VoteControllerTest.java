@@ -56,12 +56,11 @@ class VoteControllerTest extends AbstractControllerTest {
     @WithUserDetails(value = ADMIN_MAIL)
     void getOwnByDate() throws Exception {
         perform(MockMvcRequestBuilders.get(REST_URL + "/by-date")
-                .param("date", "2022-05-21"))
+                .param("date", "2021-06-05"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(VOTE_MATCHER.contentJson(vote_4));
     }
-
 
     @Test
     @WithUserDetails(value = ADMIN_MAIL)
