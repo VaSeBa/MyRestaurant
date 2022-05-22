@@ -18,7 +18,6 @@ import org.hibernate.annotations.OnDeleteAction;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class Vote extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

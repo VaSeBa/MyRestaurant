@@ -1,12 +1,7 @@
 package ru.vaseba.myrestaurant.entity;
 
 import java.time.LocalDate;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -17,14 +12,11 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
-@Table(name = "menu_item", uniqueConstraints = {@UniqueConstraint(columnNames = {"restaurant_id", "actual_date", "name"}, name = "uk_menu_item")})
 @Getter
+@Table(name = "menu_item", uniqueConstraints = {@UniqueConstraint(columnNames = {"actual_date", "dish_ref_id"}, name = "uk_menu_item")})
 @Setter
 @NoArgsConstructor
-public class MenuItem extends NamedEntity {
-
-    @Column(name = "price", nullable = false)
-    private int price;
+public class MenuItem extends BaseEntity {
 
     @Column(name = "actual_date", nullable = false)
     @NotNull
@@ -35,10 +27,19 @@ public class MenuItem extends NamedEntity {
     @JsonIgnore
     private Restaurant restaurant;
 
-    public MenuItem(Integer id, String name, int price, LocalDate actualDate, Restaurant restaurant) {
-        super(id, name);
-        this.price = price;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "dish_ref_id", insertable = false, updatable = false)
+    @JsonIgnore
+    // No cascade. Disable dishRef, already used in menu
+    private DishRef dishRef;
+
+    @Column(name = "dish_ref_id")
+    private int dishRefId;
+
+    public MenuItem(Integer id, @NotNull LocalDate actualDate, Restaurant restaurant, DishRef dishRef) {
+        super(id);
         this.actualDate = actualDate;
         this.restaurant = restaurant;
+        this.dishRefId = dishRef.id();
     }
 }
