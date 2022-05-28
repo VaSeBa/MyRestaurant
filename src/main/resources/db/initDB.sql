@@ -44,7 +44,8 @@ CREATE TABLE dish_ref
     name          VARCHAR            NOT NULL,
     price         NUMERIC(7, 2)      NOT NULL,
     enabled       BOOL  DEFAULT TRUE NOT NULL,
-    CONSTRAINT uk_dish_ref UNIQUE (name)
+    restaurant_id INTEGER            NOT NULL,
+    CONSTRAINT uk_dish_ref UNIQUE (name, restaurant_id)
 );
 
 CREATE TABLE menu_item
