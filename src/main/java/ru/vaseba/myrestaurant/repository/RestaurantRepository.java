@@ -14,13 +14,26 @@ import java.util.List;
 public interface RestaurantRepository extends BaseRepository<Restaurant> {
 
     //  https://docs.jboss.org/hibernate/orm/5.2/userguide/html_single/Hibernate_User_Guide.html#hql-distinct
+    // SQL в текстовом блоке https://topjava.ru/blog/tekstovye-bloki-v-java
     @QueryHints({
             @QueryHint(name = org.hibernate.jpa.QueryHints.HINT_PASS_DISTINCT_THROUGH, value = "false")
     })
-    @Query("SELECT DISTINCT r from Restaurant r JOIN FETCH r.menuItems mi JOIN FETCH mi.dishRef d WHERE r.enabled=true AND mi.actualDate=:date ORDER BY r.name ASC, d.name ASC")
+    @Query("""
+            SELECT DISTINCT r from Restaurant r
+            JOIN FETCH r.menuItems mi
+            JOIN FETCH mi.dishRef d
+            WHERE r.enabled=true AND mi.actualDate=:date AND d.enabled=true
+            ORDER BY r.name ASC, d.name ASC
+            """)
     List<Restaurant> getWithMenuByDate(LocalDate date);
 
-    @Query("SELECT r from Restaurant r JOIN FETCH r.menuItems mi JOIN FETCH mi.dishRef d WHERE r.id=:id AND r.enabled=true AND mi.actualDate=:date ORDER BY d.name ASC")
+    @Query("""
+            SELECT r from Restaurant r
+            JOIN FETCH r.menuItems mi
+            JOIN FETCH mi.dishRef d
+            WHERE r.id=:id AND r.enabled=true AND mi.actualDate=:date AND d.enabled=true
+            ORDER BY d.name ASC
+            """)
     Restaurant getWithMenuByRestaurantAndDate(int id, LocalDate date);
 
     @Query("SELECT r from Restaurant r WHERE r.enabled=true ORDER BY r.name ASC")

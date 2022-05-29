@@ -8,6 +8,7 @@ import ru.vaseba.myrestaurant.repository.RestaurantRepository;
 import ru.vaseba.myrestaurant.web.AbstractControllerTest;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static ru.vaseba.myrestaurant.util.RestaurantUtil.withMenu;
 import static ru.vaseba.myrestaurant.web.restaurant.RestaurantTestData.*;
 
 class RestaurantControllerTest extends AbstractControllerTest {
@@ -21,7 +22,7 @@ class RestaurantControllerTest extends AbstractControllerTest {
         perform(MockMvcRequestBuilders.get(REST_URL + "menu_today"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(RESTAURANT_MATCHER_WITH_MENU.contentJson(wasabi, mac));
+                .andExpect(RESTAURANT_MATCHER_WITH_MENU.contentJson(withMenu(wasabi), withMenu(mac)));
     }
 
     @Test
@@ -29,7 +30,7 @@ class RestaurantControllerTest extends AbstractControllerTest {
         perform(MockMvcRequestBuilders.get(REST_URL + MAC_ID + "/menu_today"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(RESTAURANT_MATCHER_WITH_MENU.contentJson(mac));
+                .andExpect(RESTAURANT_MATCHER_WITH_MENU.contentJson(withMenu(mac)));
     }
 
     @Test

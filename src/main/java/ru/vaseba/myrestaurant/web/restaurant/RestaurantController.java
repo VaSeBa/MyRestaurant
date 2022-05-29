@@ -1,6 +1,5 @@
 package ru.vaseba.myrestaurant.web.restaurant;
 
-import com.fasterxml.jackson.annotation.JsonView;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -10,7 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.vaseba.myrestaurant.entity.Restaurant;
 import ru.vaseba.myrestaurant.repository.RestaurantRepository;
-import ru.vaseba.myrestaurant.web.View;
+import ru.vaseba.myrestaurant.to.RestaurantWithMenu;
+import ru.vaseba.myrestaurant.util.RestaurantUtil;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -31,17 +31,17 @@ public class RestaurantController {
     }
 
     @GetMapping("/menu_today")
-    @JsonView(View.RestaurantWithMeals.class)
-    public List<Restaurant> getWithMenuForToday() {
+    public List<RestaurantWithMenu> getWithMenuForToday() {
         log.info("getWithMenuForToday");
-        return repository.getWithMenuByDate(LocalDate.now());
+        List<Restaurant> restaurants = repository.getWithMenuByDate(LocalDate.now());
+        return RestaurantUtil.withMenu(restaurants);
     }
 
     @GetMapping("/{id}/menu_today")
-    @JsonView(View.RestaurantWithMeals.class)
-    public Restaurant getWithMenuByRestaurantForToday(@PathVariable int id) {
+    public RestaurantWithMenu getWithMenuByRestaurantForToday(@PathVariable int id) {
         log.info("getWithMenuByRestaurantForToday {}", id);
         repository.checkAvailable(id);
-        return repository.getWithMenuByRestaurantAndDate(id, LocalDate.now());
+        Restaurant restaurant = repository.getWithMenuByRestaurantAndDate(id, LocalDate.now());
+        return RestaurantUtil.withMenu(restaurant);
     }
 }

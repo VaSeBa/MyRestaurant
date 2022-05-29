@@ -4,6 +4,7 @@ package ru.vaseba.myrestaurant.web.restaurant;
 import ru.vaseba.myrestaurant.entity.DishRef;
 import ru.vaseba.myrestaurant.entity.MenuItem;
 import ru.vaseba.myrestaurant.entity.Restaurant;
+import ru.vaseba.myrestaurant.to.RestaurantWithMenu;
 import ru.vaseba.myrestaurant.web.MatcherFactory;
 import ru.vaseba.myrestaurant.web.MatcherFactory.Matcher;
 
@@ -12,8 +13,7 @@ import java.util.List;
 
 public class RestaurantTestData {
     public static final Matcher<Restaurant> RESTAURANT_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(Restaurant.class, "menuItems");
-    public static final Matcher<Restaurant> RESTAURANT_MATCHER_WITH_MENU = MatcherFactory.usingIgnoringFieldsComparator(Restaurant.class, "menuItems.restaurant", "menuItems.dishRef");
-
+    public static final Matcher<RestaurantWithMenu> RESTAURANT_MATCHER_WITH_MENU = MatcherFactory.usingIgnoringFieldsComparator(RestaurantWithMenu.class, "dishRefs.restaurant");
     public static final Matcher<DishRef> DISH_REF_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(DishRef.class, "restaurant");
 
     public static final int MAC_ID = 1;

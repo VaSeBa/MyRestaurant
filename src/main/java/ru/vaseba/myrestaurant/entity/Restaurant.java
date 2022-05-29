@@ -1,16 +1,12 @@
 package ru.vaseba.myrestaurant.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonView;
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.lang.Nullable;
 import ru.vaseba.myrestaurant.util.validation.NoHtml;
-import ru.vaseba.myrestaurant.web.View;
-
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -35,8 +31,9 @@ public class Restaurant extends NamedEntity {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
     @OnDelete(action = OnDeleteAction.CASCADE) //https://stackoverflow.com/a/44988100/548473
-    @JsonView(View.RestaurantWithMeals.class)
-    @Schema(hidden = true)
+//    @JsonView(View.RestaurantWithMeals.class)
+//    @Schema(hidden = true)
+    @JsonIgnore
     @ToString.Exclude
     @JsonInclude(JsonInclude.Include.NON_EMPTY) //https://stackoverflow.com/a/27964775/548473
     private List<MenuItem> menuItems;
