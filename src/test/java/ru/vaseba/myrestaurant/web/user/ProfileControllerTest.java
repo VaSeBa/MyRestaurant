@@ -19,18 +19,20 @@ import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import ru.vaseba.myrestaurant.entity.User;
+import ru.vaseba.myrestaurant.mapper.UserMapper;
 import ru.vaseba.myrestaurant.repository.UserRepository;
 import ru.vaseba.myrestaurant.to.UserTo;
 import ru.vaseba.myrestaurant.util.JsonUtil;
-import ru.vaseba.myrestaurant.util.UserUtil;
 import ru.vaseba.myrestaurant.web.AbstractControllerTest;
 import ru.vaseba.myrestaurant.web.GlobalExceptionHandler;
-
 
 class ProfileControllerTest extends AbstractControllerTest {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private UserMapper userMapper;
 
     @Test
     @WithUserDetails(value = USER_MAIL)
@@ -58,7 +60,7 @@ class ProfileControllerTest extends AbstractControllerTest {
     @Test
     void register() throws Exception {
         UserTo newTo = new UserTo(null, "newName", "newemail@ya.ru", "newPassword");
-        User newUser = UserUtil.createNewFromTo(newTo);
+        User newUser = userMapper.toEntity(newTo);
         ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(newTo)))
@@ -81,7 +83,7 @@ class ProfileControllerTest extends AbstractControllerTest {
                 .andDo(print())
                 .andExpect(status().isNoContent());
 
-        USER_MATCHER.assertMatch(userRepository.getById(USER_ID), UserUtil.updateFromTo(new User(user), updatedTo));
+        USER_MATCHER.assertMatch(userRepository.getById(USER_ID), userMapper.updateFromTo(new User(user), updatedTo));
     }
 
     @Test

@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.vaseba.myrestaurant.entity.Restaurant;
+import ru.vaseba.myrestaurant.mapper.RestaurantMapper;
 import ru.vaseba.myrestaurant.repository.RestaurantRepository;
 import ru.vaseba.myrestaurant.to.RestaurantWithMenu;
-import ru.vaseba.myrestaurant.util.RestaurantUtil;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -24,6 +24,7 @@ public class RestaurantController {
     static final String REST_URL = "/api/restaurants";
 
     private final RestaurantRepository repository;
+    private final RestaurantMapper restaurantMapper;
 
     @GetMapping
     @Cacheable("restaurants")
@@ -37,7 +38,7 @@ public class RestaurantController {
     public List<RestaurantWithMenu> getWithMenuForToday() {
         log.info("getWithMenuForToday");
         List<Restaurant> restaurants = repository.getWithMenuByDate(LocalDate.now());
-        return RestaurantUtil.withMenu(restaurants);
+        return restaurantMapper.toToList(restaurants);
     }
 
     @GetMapping("/{id}/menu_today")
@@ -46,6 +47,6 @@ public class RestaurantController {
         log.info("getWithMenuByRestaurantForToday {}", id);
         repository.checkAvailable(id);
         Restaurant restaurant = repository.getWithMenuByRestaurantAndDate(id, LocalDate.now());
-        return RestaurantUtil.withMenu(restaurant);
+        return restaurantMapper.toTo(restaurant);
     }
 }

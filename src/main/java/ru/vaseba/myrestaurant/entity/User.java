@@ -18,6 +18,7 @@ import java.util.Date;
 import java.util.EnumSet;
 import java.util.Set;
 import ru.vaseba.myrestaurant.HasIdAndEmail;
+import ru.vaseba.myrestaurant.mapper.Default;
 import ru.vaseba.myrestaurant.util.validation.NoHtml;
 
 @Entity
@@ -64,6 +65,11 @@ public class User extends NamedEntity implements HasIdAndEmail, Serializable {
 
     public User(User u) {
         this(u.id, u.name, u.email, u.password, u.enabled, u.registered, u.roles);
+    }
+
+    @Default
+    public User(Integer id, String name, String email, String password) {
+        this(id, name, email, password, true, new Date(), EnumSet.of(Role.USER));
     }
 
     public User(Integer id, String name, String email, String password, Role role, Role... roles) {
