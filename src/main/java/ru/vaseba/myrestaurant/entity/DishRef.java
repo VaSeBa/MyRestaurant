@@ -10,7 +10,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "dish_ref", uniqueConstraints = {@UniqueConstraint(columnNames = {"name", "restaurant_id"}, name = "uk_dish_ref")})
+@Table(name = "dish_ref", uniqueConstraints = {@UniqueConstraint(columnNames = {"restaurant_id", "name"}, name = "uk_dish_ref")})
 @Getter
 @Setter
 @NoArgsConstructor

@@ -1,3 +1,5 @@
+app.deadline: "11:00"
+
 #  https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
 spring:
   jpa:
@@ -26,8 +28,9 @@ spring:
     # --------  Postgres -----------------------------------
     url: jdbc:postgresql://localhost:5432/mr
     driver-class-name: org.postgresql.Driver
-    username: ${database.username}
-    password: ${database.password}
+#    username: ${database.username}
+#    password: ${database.password}
+
 
   # Jackson Serialization Issue Resolver -------------------
   jackson:
