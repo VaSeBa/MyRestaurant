@@ -34,12 +34,12 @@ public class Vote extends BaseEntity {
     @NotNull
     private LocalTime actualTime;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-//    https://stackoverflow.com/a/44539145/548473
-    @JoinColumn(name = "restaurant_id", insertable = false, updatable = false)
-    @JsonIgnore
-    // No cascade, disable for already voted restaurant
-    private Restaurant restaurant;
+//    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+////    https://stackoverflow.com/a/44539145/548473
+//    @JoinColumn(name = "restaurant_id", insertable = false, updatable = false)
+//    @JsonIgnore
+//    // No cascade, disable for already voted restaurant
+//    private Restaurant restaurant;
 
     @Column(name = "restaurant_id")
     private int restaurantId;
