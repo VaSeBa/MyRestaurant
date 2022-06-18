@@ -53,6 +53,15 @@ public class User extends NamedEntity implements HasIdAndEmail, Serializable {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Date registered = new Date();
 
+    @CollectionTable(name = "admin_restaurant",
+            joinColumns = @JoinColumn(name = "admin_id"),
+            uniqueConstraints = @UniqueConstraint(columnNames = {"admin_id", "restaurant_id"}, name = "uk_admin_restaurant"))
+    @Column(name = "restaurant_id")
+    @ElementCollection(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Set<Integer> adminRestaurants = Set.of();
+
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),

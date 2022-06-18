@@ -5,12 +5,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ru.vaseba.myrestaurant.web.user.ProfileController.REST_URL;
-import static ru.vaseba.myrestaurant.web.user.UserTestData.ADMIN_MAIL;
-import static ru.vaseba.myrestaurant.web.user.UserTestData.USER_ID;
-import static ru.vaseba.myrestaurant.web.user.UserTestData.USER_MAIL;
-import static ru.vaseba.myrestaurant.web.user.UserTestData.USER_MATCHER;
-import static ru.vaseba.myrestaurant.web.user.UserTestData.admin;
-import static ru.vaseba.myrestaurant.web.user.UserTestData.user;
+import static ru.vaseba.myrestaurant.web.user.UserTestData.*;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +49,7 @@ class ProfileControllerTest extends AbstractControllerTest {
     void delete() throws Exception {
         perform(MockMvcRequestBuilders.delete(REST_URL))
                 .andExpect(status().isNoContent());
-        USER_MATCHER.assertMatch(userRepository.findAll(), admin);
+        USER_MATCHER.assertMatch(userRepository.findAll(), admin, r_admin);
     }
 
     @Test
