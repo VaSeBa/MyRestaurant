@@ -40,19 +40,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserRepository userRepository;
 
     @Bean
-    public UserDetailsService userDetailsService() {
-        return email -> {
-            log.debug("Authenticating '{}'", email);
-            Optional<User> optionalUser = userRepository.getByEmail(email);
-            return new AuthUser(optionalUser.orElseThrow(
-                    () -> new UsernameNotFoundException("User '" + email + "' was not found")));
-        };
+    @Override
+    public UserDetailsService userDetailsServiceBean() throws Exception {
+        return super.userDetailsServiceBean();
     }
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService())
-                .passwordEncoder(PASSWORD_ENCODER);
+        auth.userDetailsService(
+                email -> {
+                    log.debug("Authenticating '{}'", email);
+                    Optional<User> optionalUser = userRepository.findByEmailIgnoreCase(email);
+                    return new AuthUser(optionalUser.orElseThrow(
+                            () -> new UsernameNotFoundException("User '" + email + "' was not found")));
+                }
+        ).passwordEncoder(PASSWORD_ENCODER);
     }
 
     @Bean

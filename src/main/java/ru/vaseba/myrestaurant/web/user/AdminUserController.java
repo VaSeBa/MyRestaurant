@@ -74,7 +74,7 @@ public class AdminUserController extends AbstractUserController {
     @GetMapping("/by-email")
     public ResponseEntity<User> getByEmail(@RequestParam String email) {
         log.info("getByEmail {}", email);
-        return ResponseEntity.of(repository.getByEmail(email));
+        return ResponseEntity.of(repository.findByEmailIgnoreCase(email));
     }
 
     @PatchMapping("/{id}")

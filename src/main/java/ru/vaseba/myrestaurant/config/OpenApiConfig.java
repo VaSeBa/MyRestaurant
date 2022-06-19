@@ -27,8 +27,13 @@ import java.time.format.DateTimeFormatter;
         info = @Info(
                 title = "REST API documentation",
                 version = "1.0",
-                description = "Web - Приложение, голосование за ресторан (выбор меню дня)",
-                contact = @Contact(name = "Valentin Badasin", email = "badasin.valentin@yandex.ru")
+                description = """
+                        Приложение - голосование за ресторан (меню дня)
+                        <p><b>Тестовые креденшелы:</b><br>
+                        - user@yandex.ru / password<br>
+                        - admin@gmail.com / admin</p>
+                        """,
+                contact = @Contact(url = "https://", name = "Valentin Badasin", email = "badasin.valentin@yandex.ru")
         ),
         security = @SecurityRequirement(name = "basicAuth")
 )

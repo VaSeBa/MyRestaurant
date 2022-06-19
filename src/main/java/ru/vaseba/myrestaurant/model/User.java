@@ -26,7 +26,6 @@ import ru.vaseba.myrestaurant.util.validation.NoHtml;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString(callSuper = true, exclude = {"password"})
 public class User extends NamedEntity implements HasIdAndEmail, Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
@@ -100,5 +99,10 @@ public class User extends NamedEntity implements HasIdAndEmail, Serializable {
 
     public boolean hasRole(Role role) {
         return roles.contains(role);
+    }
+
+    @Override
+    public String toString() {
+        return "User:" + id + '[' + email + ']';
     }
 }

@@ -11,7 +11,6 @@ import ru.vaseba.myrestaurant.util.validation.NoHtml;
 
 @Value
 @EqualsAndHashCode(callSuper = true)
-@ToString(callSuper = true)
 public class UserTo extends NamedTo implements HasIdAndEmail {
     @Email
     @NotBlank
@@ -27,5 +26,10 @@ public class UserTo extends NamedTo implements HasIdAndEmail {
         super(id, name);
         this.email = email;
         this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "UserTo:" + id + '[' + email + ']';
     }
 }
