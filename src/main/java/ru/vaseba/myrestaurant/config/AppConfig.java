@@ -7,25 +7,22 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.h2.tools.Server;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cache.interceptor.KeyGenerator;
+import org.springframework.cache.interceptor.SimpleKey;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
 import ru.vaseba.myrestaurant.util.JsonUtil;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 @Configuration
 @Slf4j
 @EnableCaching
-@EnableScheduling
 @AllArgsConstructor
 public class AppConfig {
-
-    private final CacheManager cacheManager;
 
     @Bean(initMethod = "start", destroyMethod = "stop")
     @Profile("!test")
@@ -41,14 +38,14 @@ public class AppConfig {
     }
 
     @Autowired
-    public void storeObjectMapper(ObjectMapper objectMapper) {
+    void storeObjectMapper(ObjectMapper objectMapper) {
         JsonUtil.setMapper(objectMapper);
     }
 
-    @Scheduled(cron = "0 11 * * * *") // clear at midnight
-    public void clearCacheAtMidnight() {
-        log.info("clearCacheAtMidnight");
-        cacheManager.getCache("allRestaurantsWithMenu").clear();
-        cacheManager.getCache("restaurantWithMenu").clear();
+    @Bean
+    // Изменил очистку кэша в @Scheduled на Cache Custom KeyGenerator
+    KeyGenerator currentDateKeyGenerator() {
+        return (target, method, params) ->
+                params.length == 0 ? LocalDate.now() : new SimpleKey(LocalDate.now(), params);
     }
 }

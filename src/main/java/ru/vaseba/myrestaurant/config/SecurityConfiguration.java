@@ -1,23 +1,18 @@
 package ru.vaseba.myrestaurant.config;
 
-import static ru.vaseba.myrestaurant.util.UserUtil.PASSWORD_ENCODER;
-
-import java.io.IOException;
-import java.util.Optional;
-
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.filter.OncePerRequestFilter;
 import ru.vaseba.myrestaurant.model.Role;
 import ru.vaseba.myrestaurant.model.User;
@@ -30,31 +25,32 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Optional;
 
 @Configuration
 @EnableWebSecurity
 @Slf4j
 @AllArgsConstructor
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+//https://stackoverflow.com/questions/72493425/548473
+public class SecurityConfiguration {
+    public static final PasswordEncoder PASSWORD_ENCODER = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 
     private final UserRepository userRepository;
 
     @Bean
-    @Override
-    public UserDetailsService userDetailsServiceBean() throws Exception {
-        return super.userDetailsServiceBean();
+    public PasswordEncoder passwordEncoder() {
+        return PASSWORD_ENCODER;
     }
 
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(
-                email -> {
-                    log.debug("Authenticating '{}'", email);
-                    Optional<User> optionalUser = userRepository.findByEmailIgnoreCase(email);
-                    return new AuthUser(optionalUser.orElseThrow(
-                            () -> new UsernameNotFoundException("User '" + email + "' was not found")));
-                }
-        ).passwordEncoder(PASSWORD_ENCODER);
+    @Bean
+    public UserDetailsService userDetailsService() {
+        return email -> {
+            log.debug("Authenticating '{}'", email);
+            Optional<User> optionalUser = userRepository.findByEmailIgnoreCase(email);
+            return new AuthUser(optionalUser.orElseThrow(
+                    () -> new UsernameNotFoundException("User '" + email + "' was not found")));
+        };
     }
 
     @Bean
@@ -71,8 +67,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         };
     }
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/api/restaurants/**").permitAll()
                 .antMatchers(AdminRestaurantsUtil.REST_URL + "/**").hasAnyRole(Role.R_ADMIN.name(), Role.ADMIN.name())
@@ -82,5 +78,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().httpBasic()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().csrf().disable();
+        return http.build();
     }
 }
