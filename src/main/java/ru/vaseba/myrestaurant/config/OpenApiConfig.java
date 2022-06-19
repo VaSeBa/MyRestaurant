@@ -33,7 +33,8 @@ import java.time.format.DateTimeFormatter;
         security = @SecurityRequirement(name = "basicAuth")
 )
 public class OpenApiConfig {
-    //    https://ru.stackoverflow.com/a/1276885/209226  -> решение проблемы с отображением LocalTime в springdoc
+
+    //    https://ru.stackoverflow.com/a/1276885/209226
     static {
         var schema = new Schema<LocalTime>();
         schema.example(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")));

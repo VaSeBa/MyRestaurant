@@ -1,4 +1,4 @@
-package ru.vaseba.myrestaurant.entity;
+package ru.vaseba.myrestaurant.model;
 
 import java.time.LocalDate;
 import javax.persistence.*;

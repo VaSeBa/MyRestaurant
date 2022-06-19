@@ -3,18 +3,18 @@ package ru.vaseba.myrestaurant.repository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.transaction.annotation.Transactional;
-import ru.vaseba.myrestaurant.entity.Restaurant;
+import ru.vaseba.myrestaurant.model.Restaurant;
 import ru.vaseba.myrestaurant.error.DataConflictException;
 
 import javax.persistence.QueryHint;
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.List;
 
 @Transactional(readOnly = true)
 public interface RestaurantRepository extends BaseRepository<Restaurant> {
 
     //  https://docs.jboss.org/hibernate/orm/5.2/userguide/html_single/Hibernate_User_Guide.html#hql-distinct
-    // SQL в текстовом блоке https://topjava.ru/blog/tekstovye-bloki-v-java
     @QueryHints({
             @QueryHint(name = org.hibernate.jpa.QueryHints.HINT_PASS_DISTINCT_THROUGH, value = "false")
     })
@@ -35,6 +35,9 @@ public interface RestaurantRepository extends BaseRepository<Restaurant> {
             ORDER BY d.name ASC
             """)
     Restaurant getWithMenuByRestaurantAndDate(int id, LocalDate date);
+
+    @Query("SELECT r from Restaurant r WHERE r.id IN (:ids) ORDER BY r.name ASC")
+    List<Restaurant> getIn(Collection<Integer> ids);
 
     @Query("SELECT r from Restaurant r WHERE r.enabled=true ORDER BY r.name ASC")
     List<Restaurant> getAllEnabled();

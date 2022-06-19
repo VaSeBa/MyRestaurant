@@ -2,11 +2,10 @@ package ru.vaseba.myrestaurant.web.user;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
-import ru.vaseba.myrestaurant.entity.User;
+import ru.vaseba.myrestaurant.model.User;
 import ru.vaseba.myrestaurant.repository.UserRepository;
 import ru.vaseba.myrestaurant.util.UserUtil;
 

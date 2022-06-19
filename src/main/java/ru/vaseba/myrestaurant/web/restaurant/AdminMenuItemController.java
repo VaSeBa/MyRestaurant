@@ -11,9 +11,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import ru.vaseba.myrestaurant.entity.MenuItem;
+import ru.vaseba.myrestaurant.model.MenuItem;
 import ru.vaseba.myrestaurant.repository.MenuItemRepository;
 import ru.vaseba.myrestaurant.service.MenuItemService;
+import ru.vaseba.myrestaurant.util.validation.AdminRestaurantsUtil;
 
 import javax.validation.Valid;
 import java.net.URI;
@@ -29,7 +30,7 @@ import static ru.vaseba.myrestaurant.util.validation.ValidationUtil.checkNew;
 @Slf4j
 public class AdminMenuItemController {
 
-    static final String REST_URL = "/api/admin/restaurants/{restaurantId}/menu-items";
+    static final String REST_URL =  AdminRestaurantsUtil.REST_URL + "/{restaurantId}/menu-items";
 
     private final MenuItemRepository repository;
     private final MenuItemService service;

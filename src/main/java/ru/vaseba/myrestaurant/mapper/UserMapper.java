@@ -3,7 +3,7 @@ package ru.vaseba.myrestaurant.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
-import ru.vaseba.myrestaurant.entity.User;
+import ru.vaseba.myrestaurant.model.User;
 import ru.vaseba.myrestaurant.to.UserTo;
 
 @Mapper(componentModel = "spring")

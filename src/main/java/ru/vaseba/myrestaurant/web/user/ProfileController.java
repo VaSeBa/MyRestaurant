@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import ru.vaseba.myrestaurant.entity.User;
+import ru.vaseba.myrestaurant.model.User;
 import ru.vaseba.myrestaurant.mapper.UserMapper;
 import ru.vaseba.myrestaurant.to.UserTo;
 import ru.vaseba.myrestaurant.web.AuthUser;

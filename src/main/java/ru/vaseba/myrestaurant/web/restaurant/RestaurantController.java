@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.vaseba.myrestaurant.entity.Restaurant;
+import ru.vaseba.myrestaurant.model.Restaurant;
 import ru.vaseba.myrestaurant.mapper.RestaurantMapper;
 import ru.vaseba.myrestaurant.repository.RestaurantRepository;
 import ru.vaseba.myrestaurant.to.RestaurantWithMenu;

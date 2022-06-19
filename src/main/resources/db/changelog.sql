@@ -1,6 +1,6 @@
 --liquibase formatted sql
 
---changeset gkislin:init_schema
+--changeset vaseba:init_schema
 create table USERS
 (
     ID         INTEGER auto_increment primary key,
@@ -63,7 +63,7 @@ create table MENU_ITEM
     constraint FK_MENU_ITEM_DISH_REF foreign key (DISH_REF_ID) references DISH_REF (ID)
 );
 
---changeset gkislin:populate_data
+--changeset vaseba:populate_data
 INSERT INTO USERS (name, email, password)
 VALUES ('User', 'user@yandex.ru', '{noop}password'),
        ('Admin', 'admin@gmail.com', '{noop}admin');
@@ -123,7 +123,7 @@ VALUES (1, CURRENT_DATE, '12:30:00', 1),
        (2, '2021-06-05', '08:15:00', 2),
        (2, '2021-06-04', '12:55:00', 3);
 
---changeset gkislin:add_admin_restaurant
+--changeset vaseba:add_admin_restaurant
 create table ADMIN_RESTAURANT
 (
     ADMIN_ID INTEGER not null,

@@ -1,15 +1,14 @@
 package ru.vaseba.myrestaurant.web.user;
 
-import java.util.Collections;
-import java.util.Date;
-import java.util.Set;
-
-import ru.vaseba.myrestaurant.entity.Role;
-import ru.vaseba.myrestaurant.entity.User;
+import ru.vaseba.myrestaurant.model.Role;
+import ru.vaseba.myrestaurant.model.User;
 import ru.vaseba.myrestaurant.util.JsonUtil;
 import ru.vaseba.myrestaurant.web.MatcherFactory;
 import ru.vaseba.myrestaurant.web.restaurant.RestaurantTestData;
 
+import java.util.Collections;
+import java.util.Date;
+import java.util.Set;
 
 public class UserTestData {
     public static final MatcherFactory.Matcher<User> USER_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(User.class, "registered", "password");

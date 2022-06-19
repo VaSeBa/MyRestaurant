@@ -6,7 +6,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import ru.vaseba.myrestaurant.entity.Vote;
+import ru.vaseba.myrestaurant.model.Vote;
 import ru.vaseba.myrestaurant.repository.VoteRepository;
 import ru.vaseba.myrestaurant.service.VoteService;
 import ru.vaseba.myrestaurant.web.AbstractControllerTest;

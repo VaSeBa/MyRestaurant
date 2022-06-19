@@ -1,4 +1,4 @@
-package ru.vaseba.myrestaurant.entity;
+package ru.vaseba.myrestaurant.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
@@ -28,7 +28,7 @@ public class DishRef extends NamedEntity {
     @JsonIgnore
     private Restaurant restaurant;
 
-    public DishRef(Integer id, String name, int price, Restaurant restaurant ) {
+    public DishRef(Integer id, String name, int price, Restaurant restaurant) {
         super(id, name);
         this.price = price;
         this.restaurant = restaurant;

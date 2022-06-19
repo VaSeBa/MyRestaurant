@@ -1,11 +1,11 @@
-package ru.vaseba.myrestaurant.entity;
+package ru.vaseba.myrestaurant.model;
 
 import org.springframework.security.core.GrantedAuthority;
 
 public enum Role implements GrantedAuthority {
     USER,
     ADMIN,
-    R_ADMIN;
+    R_ADMIN; // restaurants admin
 
     @Override
     public String getAuthority() {

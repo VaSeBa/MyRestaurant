@@ -10,9 +10,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import ru.vaseba.myrestaurant.entity.DishRef;
+import ru.vaseba.myrestaurant.model.DishRef;
 import ru.vaseba.myrestaurant.repository.DishRefRepository;
 import ru.vaseba.myrestaurant.service.DishRefService;
+import ru.vaseba.myrestaurant.util.validation.AdminRestaurantsUtil;
 
 import javax.validation.Valid;
 import java.net.URI;
@@ -27,7 +28,7 @@ import static ru.vaseba.myrestaurant.util.validation.ValidationUtil.checkNew;
 @Slf4j
 public class AdminDishRefController {
 
-    static final String REST_URL = "/api/admin/restaurants/{restaurantId}/dish-ref";
+    static final String REST_URL = AdminRestaurantsUtil.REST_URL + "/{restaurantId}/dish-ref";
 
     private final DishRefRepository repository;
     private final DishRefService service;
@@ -40,6 +41,7 @@ public class AdminDishRefController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    // No cache evict: couldn't delete, if used in MenuItem
     public void delete(@PathVariable int restaurantId, @PathVariable int id) {
         log.info("delete for restaurantId={}, id={}", restaurantId, id);
         DishRef dishRef = repository.checkBelong(restaurantId, id);
@@ -62,7 +64,6 @@ public class AdminDishRefController {
                 .buildAndExpand(restaurantId, created.getId()).toUri();
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
-
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)

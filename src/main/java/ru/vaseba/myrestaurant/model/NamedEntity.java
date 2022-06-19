@@ -1,4 +1,4 @@
-package ru.vaseba.myrestaurant.entity;
+package ru.vaseba.myrestaurant.model;
 
 import lombok.AccessLevel;
 import lombok.Getter;

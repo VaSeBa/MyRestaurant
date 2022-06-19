@@ -1,12 +1,5 @@
 package ru.vaseba.myrestaurant.web.restaurant;
 
-import static ru.vaseba.myrestaurant.util.validation.ValidationUtil.assureIdConsistent;
-import static ru.vaseba.myrestaurant.util.validation.ValidationUtil.checkNew;
-
-import java.net.URI;
-import java.util.List;
-import javax.validation.Valid;
-
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
@@ -16,30 +9,33 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import ru.vaseba.myrestaurant.entity.Restaurant;
+import ru.vaseba.myrestaurant.model.Restaurant;
+import ru.vaseba.myrestaurant.model.Role;
+import ru.vaseba.myrestaurant.model.User;
 import ru.vaseba.myrestaurant.repository.RestaurantRepository;
+import ru.vaseba.myrestaurant.repository.UserRepository;
+import ru.vaseba.myrestaurant.util.validation.AdminRestaurantsUtil;
+import ru.vaseba.myrestaurant.web.SecurityUtil;
+
+import javax.validation.Valid;
+import java.net.URI;
+import java.util.List;
+
+import static ru.vaseba.myrestaurant.util.validation.AdminRestaurantsUtil.REST_URL;
+import static ru.vaseba.myrestaurant.util.validation.ValidationUtil.assureIdConsistent;
+import static ru.vaseba.myrestaurant.util.validation.ValidationUtil.checkNew;
+
 
 @RestController
-@RequestMapping(value = AdminRestaurantController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 @AllArgsConstructor
 @Slf4j
 public class AdminRestaurantController {
 
-    static final String REST_URL = "/api/admin/restaurants";
-
     private final RestaurantRepository repository;
+    private final UserRepository userRepository;
 
     @GetMapping("/{id}")
     public ResponseEntity<Restaurant> get(@PathVariable int id) {
@@ -49,7 +45,12 @@ public class AdminRestaurantController {
     @GetMapping
     public List<Restaurant> getAll() {
         log.info("getAll");
-        return repository.findAll(Sort.by(Sort.Direction.ASC, "name"));
+        User user = SecurityUtil.authUser();
+        if (user.hasRole(Role.R_ADMIN)) {
+            return repository.getIn(user.getAdminRestaurants());
+        } else {
+            return repository.findAll(Sort.by(Sort.Direction.ASC, "name"));
+        }
     }
 
     @DeleteMapping("/{id}")
@@ -70,6 +71,11 @@ public class AdminRestaurantController {
         log.info("create {}", restaurant);
         checkNew(restaurant);
         Restaurant created = repository.save(restaurant);
+        User user = SecurityUtil.authUser();
+        if (user.hasRole(Role.R_ADMIN)) {
+            AdminRestaurantsUtil.addRestaurant(user, created.getId());
+            userRepository.save(user);
+        }
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")
                 .buildAndExpand(created.getId()).toUri();

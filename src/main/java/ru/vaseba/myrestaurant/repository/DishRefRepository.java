@@ -2,7 +2,7 @@ package ru.vaseba.myrestaurant.repository;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
-import ru.vaseba.myrestaurant.entity.DishRef;
+import ru.vaseba.myrestaurant.model.DishRef;
 import ru.vaseba.myrestaurant.error.DataConflictException;
 
 import java.util.List;

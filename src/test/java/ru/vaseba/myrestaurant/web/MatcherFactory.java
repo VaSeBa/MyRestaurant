@@ -1,15 +1,15 @@
 package ru.vaseba.myrestaurant.web;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.io.UnsupportedEncodingException;
-import java.util.List;
-import java.util.function.BiConsumer;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.ResultMatcher;
 import ru.vaseba.myrestaurant.util.JsonUtil;
 
+import java.io.UnsupportedEncodingException;
+import java.util.List;
+import java.util.function.BiConsumer;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Factory for creating test matchers.

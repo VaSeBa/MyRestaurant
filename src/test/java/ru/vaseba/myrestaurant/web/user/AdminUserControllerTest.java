@@ -1,12 +1,5 @@
 package ru.vaseba.myrestaurant.web.user;
 
-import static org.hamcrest.Matchers.containsString;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static ru.vaseba.myrestaurant.web.user.UserTestData.*;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -15,12 +8,18 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import ru.vaseba.myrestaurant.entity.Role;
-import ru.vaseba.myrestaurant.entity.User;
+import ru.vaseba.myrestaurant.model.Role;
+import ru.vaseba.myrestaurant.model.User;
 import ru.vaseba.myrestaurant.repository.UserRepository;
 import ru.vaseba.myrestaurant.web.AbstractControllerTest;
 import ru.vaseba.myrestaurant.web.GlobalExceptionHandler;
 
+import static org.hamcrest.Matchers.containsString;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static ru.vaseba.myrestaurant.web.user.UserTestData.*;
 
 class AdminUserControllerTest extends AbstractControllerTest {
 

@@ -5,7 +5,7 @@ import static java.util.Objects.requireNonNull;
 import lombok.experimental.UtilityClass;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import ru.vaseba.myrestaurant.entity.User;
+import ru.vaseba.myrestaurant.model.User;
 
 @UtilityClass
 public class SecurityUtil {

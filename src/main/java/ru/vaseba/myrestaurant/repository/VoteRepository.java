@@ -3,7 +3,7 @@ package ru.vaseba.myrestaurant.repository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
-import ru.vaseba.myrestaurant.entity.Vote;
+import ru.vaseba.myrestaurant.model.Vote;
 
 import java.time.LocalDate;
 import java.util.List;

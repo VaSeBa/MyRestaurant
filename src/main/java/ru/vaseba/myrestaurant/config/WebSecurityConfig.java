@@ -1,8 +1,8 @@
 package ru.vaseba.myrestaurant.config;
 
-
 import static ru.vaseba.myrestaurant.util.UserUtil.PASSWORD_ENCODER;
 
+import java.io.IOException;
 import java.util.Optional;
 
 import lombok.AllArgsConstructor;
@@ -18,11 +18,18 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import ru.vaseba.myrestaurant.entity.Role;
-import ru.vaseba.myrestaurant.entity.User;
+import org.springframework.web.filter.OncePerRequestFilter;
+import ru.vaseba.myrestaurant.model.Role;
+import ru.vaseba.myrestaurant.model.User;
 import ru.vaseba.myrestaurant.repository.UserRepository;
+import ru.vaseba.myrestaurant.util.validation.AdminRestaurantsUtil;
 import ru.vaseba.myrestaurant.web.AuthUser;
+import ru.vaseba.myrestaurant.web.SecurityUtil;
 
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Configuration
 @EnableWebSecurity
@@ -48,10 +55,25 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .passwordEncoder(PASSWORD_ENCODER);
     }
 
+    @Bean
+    public OncePerRequestFilter restaurantsAdminFilter() {
+        return new OncePerRequestFilter() {
+            @Override
+            protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+                AuthUser authUser = SecurityUtil.safeGet();
+                if (authUser != null && authUser.hasRole(Role.R_ADMIN)) {
+                    AdminRestaurantsUtil.checkRequestAccess(authUser.getUser(), request.getRequestURI());
+                }
+                filterChain.doFilter(request, response);
+            }
+        };
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/api/restaurants/**").permitAll()
+                .antMatchers(AdminRestaurantsUtil.REST_URL + "/**").hasAnyRole(Role.R_ADMIN.name(), Role.ADMIN.name())
                 .antMatchers("/api/admin/**").hasRole(Role.ADMIN.name())
                 .antMatchers(HttpMethod.POST, "/api/profile").anonymous()
                 .antMatchers("/api/**").authenticated()

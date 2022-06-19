@@ -1,42 +1,50 @@
 package ru.vaseba.myrestaurant.web.restaurant;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static ru.vaseba.myrestaurant.web.restaurant.RestaurantTestData.MAC_ID;
-import static ru.vaseba.myrestaurant.web.restaurant.RestaurantTestData.RESTAURANT_MATCHER;
-import static ru.vaseba.myrestaurant.web.restaurant.RestaurantTestData.getNew;
-import static ru.vaseba.myrestaurant.web.restaurant.RestaurantTestData.getUpdated;
-import static ru.vaseba.myrestaurant.web.restaurant.RestaurantTestData.mac;
-import static ru.vaseba.myrestaurant.web.restaurant.RestaurantTestData.shalypin;
-import static ru.vaseba.myrestaurant.web.restaurant.RestaurantTestData.wasabi;
-import static ru.vaseba.myrestaurant.web.user.UserTestData.ADMIN_MAIL;
-import static ru.vaseba.myrestaurant.web.user.UserTestData.USER_MAIL;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import ru.vaseba.myrestaurant.entity.Restaurant;
+import ru.vaseba.myrestaurant.model.Restaurant;
+import ru.vaseba.myrestaurant.repository.MenuItemRepository;
 import ru.vaseba.myrestaurant.repository.RestaurantRepository;
+import ru.vaseba.myrestaurant.repository.UserRepository;
 import ru.vaseba.myrestaurant.repository.VoteRepository;
 import ru.vaseba.myrestaurant.util.JsonUtil;
+import ru.vaseba.myrestaurant.util.validation.AdminRestaurantsUtil;
 import ru.vaseba.myrestaurant.web.AbstractControllerTest;
+import ru.vaseba.myrestaurant.web.user.UserTestData;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static ru.vaseba.myrestaurant.web.restaurant.RestaurantTestData.*;
+import static ru.vaseba.myrestaurant.web.user.UserTestData.ADMIN_MAIL;
+import static ru.vaseba.myrestaurant.web.user.UserTestData.R_ADMIN_ID;
+import static ru.vaseba.myrestaurant.web.user.UserTestData.R_ADMIN_MAIL;
+import static ru.vaseba.myrestaurant.web.user.UserTestData.USER_MAIL;
 
 class AdminRestaurantControllerTest extends AbstractControllerTest {
 
-    private static final String REST_URL = AdminRestaurantController.REST_URL + '/';
+    private static final String REST_URL = AdminRestaurantsUtil.REST_URL + '/';
 
     @Autowired
     private RestaurantRepository restaurantRepository;
     @Autowired
     private VoteRepository voteRepository;
+    @Autowired
+    private MenuItemRepository menuItemRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @Test
-    @WithUserDetails(value = ADMIN_MAIL)
+    @WithUserDetails(value = R_ADMIN_MAIL)
     void get() throws Exception {
         perform(MockMvcRequestBuilders.get(REST_URL + MAC_ID))
                 .andExpect(status().isOk())
@@ -47,9 +55,10 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    @WithUserDetails(value = ADMIN_MAIL)
+    @WithUserDetails(value = R_ADMIN_MAIL)
     void deleteWithoutVote() throws Exception {
         voteRepository.deleteByRestaurantId(MAC_ID);
+        menuItemRepository.deleteByRestaurantId(MAC_ID);
         perform(MockMvcRequestBuilders.delete(REST_URL + MAC_ID))
                 .andDo(print())
                 .andExpect(status().isNoContent());
@@ -70,7 +79,14 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    @WithUserDetails(value = ADMIN_MAIL)
+    @WithUserDetails(value = R_ADMIN_MAIL)
+    void getNotBelong() throws Exception {
+        perform(MockMvcRequestBuilders.get(REST_URL + WASABI_ID))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
+    @WithUserDetails(value = R_ADMIN_MAIL)
     void update() throws Exception {
         Restaurant updated = getUpdated();
         updated.setId(null);
@@ -84,7 +100,7 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    @WithUserDetails(value = ADMIN_MAIL)
+    @WithUserDetails(value = R_ADMIN_MAIL)
     void createWithLocation() throws Exception {
         Restaurant newRestaurant = getNew();
         ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL)
@@ -97,6 +113,10 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
         newRestaurant.setId(newId);
         RESTAURANT_MATCHER.assertMatch(created, newRestaurant);
         RESTAURANT_MATCHER.assertMatch(restaurantRepository.getById(newId), newRestaurant);
+
+        Set<Integer> newAdminRestaurants = new HashSet<>(UserTestData.r_admin.getAdminRestaurants());
+        newAdminRestaurants.add(newId);
+        assertEquals(newAdminRestaurants, userRepository.getById(R_ADMIN_ID).getAdminRestaurants());
     }
 
     @Test
@@ -109,7 +129,16 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    @WithUserDetails(value = ADMIN_MAIL)
+    @WithUserDetails(value = R_ADMIN_MAIL)
+    void getIn() throws Exception {
+        perform(MockMvcRequestBuilders.get(REST_URL))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(RESTAURANT_MATCHER.contentJson(mac, shalypin));
+    }
+
+    @Test
+    @WithUserDetails(value = R_ADMIN_MAIL)
     void enable() throws Exception {
         perform(MockMvcRequestBuilders.patch(REST_URL + MAC_ID)
                 .param("enabled", "false")

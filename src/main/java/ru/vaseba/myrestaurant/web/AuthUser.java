@@ -1,13 +1,12 @@
 package ru.vaseba.myrestaurant.web;
 
 import lombok.Getter;
-import lombok.ToString;
 import org.springframework.lang.NonNull;
-import ru.vaseba.myrestaurant.entity.User;
+import ru.vaseba.myrestaurant.model.Role;
+import ru.vaseba.myrestaurant.model.User;
 
 
 @Getter
-@ToString(of = "user")
 public class AuthUser extends org.springframework.security.core.userdetails.User {
 
     private final User user;
@@ -19,5 +18,9 @@ public class AuthUser extends org.springframework.security.core.userdetails.User
 
     public int id() {
         return user.id();
+    }
+
+    public boolean hasRole(Role role) {
+        return user.hasRole(role);
     }
 }

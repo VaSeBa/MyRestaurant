@@ -3,7 +3,7 @@ package ru.vaseba.myrestaurant.repository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
-import ru.vaseba.myrestaurant.entity.MenuItem;
+import ru.vaseba.myrestaurant.model.MenuItem;
 import ru.vaseba.myrestaurant.error.DataConflictException;
 
 import java.time.LocalDate;
@@ -12,6 +12,7 @@ import java.util.Optional;
 
 @Transactional(readOnly = true)
 public interface MenuItemRepository extends BaseRepository<MenuItem> {
+
     @Transactional
     @Modifying
     @Query("DELETE FROM MenuItem mi WHERE mi.restaurant.id=:restaurantId")

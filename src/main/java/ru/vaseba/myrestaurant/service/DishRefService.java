@@ -3,7 +3,7 @@ package ru.vaseba.myrestaurant.service;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.vaseba.myrestaurant.entity.DishRef;
+import ru.vaseba.myrestaurant.model.DishRef;
 import ru.vaseba.myrestaurant.repository.DishRefRepository;
 import ru.vaseba.myrestaurant.repository.RestaurantRepository;
 

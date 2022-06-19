@@ -8,7 +8,8 @@ import ru.vaseba.myrestaurant.mapper.RestaurantMapper;
 import ru.vaseba.myrestaurant.repository.RestaurantRepository;
 import ru.vaseba.myrestaurant.web.AbstractControllerTest;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ru.vaseba.myrestaurant.web.restaurant.RestaurantTestData.*;
 
 class RestaurantControllerTest extends AbstractControllerTest {

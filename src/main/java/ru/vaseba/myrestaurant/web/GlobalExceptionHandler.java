@@ -24,7 +24,6 @@ import ru.vaseba.myrestaurant.error.AppException;
 import ru.vaseba.myrestaurant.error.DataConflictException;
 import ru.vaseba.myrestaurant.util.validation.ValidationUtil;
 
-
 @RestControllerAdvice
 @AllArgsConstructor
 @Slf4j

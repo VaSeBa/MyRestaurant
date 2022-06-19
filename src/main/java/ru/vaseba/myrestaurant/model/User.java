@@ -1,4 +1,4 @@
-package ru.vaseba.myrestaurant.entity;
+package ru.vaseba.myrestaurant.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
@@ -53,6 +53,16 @@ public class User extends NamedEntity implements HasIdAndEmail, Serializable {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Date registered = new Date();
 
+    @Enumerated(EnumType.STRING)
+    @CollectionTable(name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "role"}, name = "uk_user_roles"))
+    @Column(name = "role")
+    @ElementCollection(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id") //https://stackoverflow.com/a/62848296/548473
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Set<Role> roles;
+
     @CollectionTable(name = "admin_restaurant",
             joinColumns = @JoinColumn(name = "admin_id"),
             uniqueConstraints = @UniqueConstraint(columnNames = {"admin_id", "restaurant_id"}, name = "uk_admin_restaurant"))
@@ -61,16 +71,6 @@ public class User extends NamedEntity implements HasIdAndEmail, Serializable {
     @JoinColumn(name = "user_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Integer> adminRestaurants = Set.of();
-
-    @Enumerated(EnumType.STRING)
-    @CollectionTable(name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "role"}, name = "uk_user_roles"))
-    @Column(name = "role")
-    @ElementCollection(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id") //https://stackoverflow.com/a/62848296/548473
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private Set<Role> roles;
 
     public User(User u) {
         this(u.id, u.name, u.email, u.password, u.enabled, u.registered, u.roles);
@@ -96,5 +96,9 @@ public class User extends NamedEntity implements HasIdAndEmail, Serializable {
 
     public void setRoles(Collection<Role> roles) {
         this.roles = CollectionUtils.isEmpty(roles) ? EnumSet.noneOf(Role.class) : EnumSet.copyOf(roles);
+    }
+
+    public boolean hasRole(Role role) {
+        return roles.contains(role);
     }
 }

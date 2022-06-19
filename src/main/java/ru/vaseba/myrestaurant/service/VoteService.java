@@ -1,13 +1,12 @@
 package ru.vaseba.myrestaurant.service;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
-import ru.vaseba.myrestaurant.entity.User;
-import ru.vaseba.myrestaurant.entity.Vote;
+import ru.vaseba.myrestaurant.model.User;
+import ru.vaseba.myrestaurant.model.Vote;
 import ru.vaseba.myrestaurant.error.DataConflictException;
 import ru.vaseba.myrestaurant.repository.RestaurantRepository;
 import ru.vaseba.myrestaurant.repository.VoteRepository;

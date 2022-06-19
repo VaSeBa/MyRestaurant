@@ -1,7 +1,7 @@
 package ru.vaseba.myrestaurant.mapper;
 
 import org.mapstruct.MappingTarget;
-import ru.vaseba.myrestaurant.entity.BaseEntity;
+import ru.vaseba.myrestaurant.model.BaseEntity;
 import ru.vaseba.myrestaurant.to.BaseTo;
 
 import java.util.Collection;
