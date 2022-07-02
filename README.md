@@ -48,7 +48,6 @@ Content-Type: application/json
 ```
 
 ```
-###
 PUT http://localhost:8080/api/admin/restaurants/1/menu-items/16
 Authorization: Basic admin@gmail.com admin
 Content-Type: application/json
